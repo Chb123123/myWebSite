@@ -1,83 +1,116 @@
 <template>
   <div class="container">
-    <div class="introduction">
-      <div class="left">
-        <div class="personal">
-          <div class="HeadPortrait">
-            <img src="@/assets/header1.jpg" alt="">
-          </div>
-          <span>Cai-HuaiBin</span>
-          <span>唯有落叶知秋意</span>
-        </div>
-        <div v-for="(item, index) in labelList" :key="item.id" :class="newIndex === index? 'labelItem labelItemStyle':'labelItem'" @click="taggerCarousel(index)">
-          <i :class="item.icon" :style="'margin-right: 10px; color:' + item.color "></i>{{item.text}}
-        </div>
+    <div class="headerTable">
+      <div class="webiteTitle">个 人 网 站</div>
+      <div class="headerNav">
+        <ul>
+          <li v-for="item in navList" :key="item.id" @click="gotoView(item.id)" :style="item.id === navIndex? 'color: #5e8fd4':''">{{ item.title }}</li>
+          </ul>
       </div>
-
-      <div class="right">
-        <el-carousel :interval="3000" :autoplay="false" arrow="always" :initial-index="newIndex" direction="vertical" indicator-position="none" style="width: 100%; height: 100%;" @change="taggerCarousel">
-          <el-carousel-item v-for="item in 6" :key="item">
-            <div class="content"></div>
-          </el-carousel-item>
-        </el-carousel>
+      <div class="userPic">
+        <!-- <img :src="userInfo.user_pic" alt="" title="查看"> -->
+        <el-image
+        class="userPicImg"
+        style="width: 100%; height: 100%"
+        :src="userInfo.user_pic"
+        :preview-src-list="srcList">
+      </el-image>
       </div>
     </div>
+    <!-- 焦点图 -->
+    <div class="focusMap">
+      <div class="mapList">
+        <el-carousel height="450px">
+        <el-carousel-item v-for="item in fouceMap" :key="item.id">
+        <div class="mapItem">
+          <img :src="item.imgUrl" alt="">
+        </div>
+        </el-carousel-item>
+      </el-carousel>
+      </div>
+      <div class="newsText"></div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { getUserInfo, getUserIndex, getTableInfo, upDataSignature } from '@/api/userInfoApi'
+import { getFouseMapList } from '@/api/homeViewApi'
+import { getUserInfo } from '@/api/userInfoApi'
 export default {
   name: 'myHome',
   data () {
     return {
       userInfo: {},
       labelList: [], // table列表
+      navIndex: 0,
       // 当前焦点图索引
-      newIndex: 0
+      newIndex: 0,
+      srcList: [],
+      // 焦点图列表
+      fouceMap: [],
+      navList: [
+        {
+          id: 0,
+          title: '首页'
+        },
+        {
+          id: 1,
+          title: '个人作品'
+        },
+        {
+          id: 2,
+          title: '个人详情'
+        },
+        {
+          id: 3,
+          title: '网页设置'
+        }
+      ]
     }
   },
   created () {
-    this.getUser()
+    const user = JSON.parse(localStorage.getItem('myWebiteUser'))
+    if (!user) {
+      this.$router.push('/login')
+    }
+    this.getUser(user.userId, user.accountNumber)
+    this.getFouseMap(user.userId)
   },
   methods: {
-    async taggerCarousel (index) {
-      console.log(this.labelList[index])
-      this.newIndex = index
-      const res = await getTableInfo(this.labelList[index].text)
-      console.log(res)
-      if (res.data.status === 0) {
-        this.$message(res.data.message)
-      }
-    },
-
-    // 获取用户数据
-    async getUser () {
-      // 获取用户数据
-      const res = await getUserInfo()
+    async getUser (userId, accountNumber) {
+      const res = await getUserInfo(userId, accountNumber)
       console.log(res)
       if (res.data.status === 1) {
         this.userInfo = res.data.queryData
-      } else {
-        this.$message(res.data.message)
-      }
-      // 获取首页 table 栏列表
-      const tabList = await getUserIndex()
-      if (res.data.status === 1) {
-        this.labelList = tabList.data.queryData
+        this.srcList.push(this.userInfo.user_pic)
       } else {
         this.$message(res.data.message)
       }
     },
-    // 修改签名
-    async signature (id, str) {
-      const res = await upDataSignature(id, str)
-      console.log(res)
-      if (res.data.status === 1) {
-        console.log(res)
-      } else {
-        this.$message(res.data.message)
+    gotoView (id) {
+      switch (id) {
+        case 0:
+          this.$router('/home')
+          break
+        case 1:
+          console.log('个人作品')
+          break
+        case 2:
+          this.$router.push('/user')
+          break
+        case 3:
+          console.log('网页设置')
+          break
       }
+    },
+    // 获取轮播图列表
+    async getFouseMap (id) {
+      const res = await getFouseMapList(id)
+      console.log(res)
+      if (res.data.status !== 1) return this.$message('获取轮播图失败')
+      this.fouceMap = res.data.queryData
+      console.log(this.fouceMap)
     }
   }
 }
@@ -88,102 +121,107 @@ export default {
     position: relative;
     width: 100vw;
     height: 100vh;
+    overflow: auto;
     // background-color: red;
-    background-image: url('@/assets/bz1.jpg');
+    background-image: url('@/assets/bg.jpg');
     background-size: 100% 100%;
-    .introduction{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 60%;
-      height: 60%;
-      border-radius: 30px;
+    .headerTable {
       display: flex;
       justify-content: space-between;
-      // background-color: rgba(255,255,255,0.5);
-      .left{
-        flex: 0.3;
+      // align-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 70px;
+      padding: 0 40px;
+      background-color: rgba(0, 0, 0, 0.3);
+      .webiteTitle {
+        width: 200px;
+        height: 70px;
+        line-height: 70px;
+        font-size: 30px;
+        color: white;
+        font-weight: 600;
+        text-shadow: 0 0 5px;
+      }
+      .headerNav{
+        flex: 1;
+        height: 70px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
-        border-radius: 30px;
-        background-color: rgba(255,255,255,0.5);
-        // 头像
-        .personal{
+        justify-content: center;
+        margin-right: 150px;
+        // background-color: red;
+        > ul {
+          width: 600px;
+          height: 70px;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
           align-items: center;
-          height: 30%;
-          width: 100%;
-          border-radius: 30px;
-          background-color: #E1DDDC;
-          box-shadow: 0 0 10px rgba(0,0,0,0.2);
-          .HeadPortrait{
-            // width: 30em;
-            // height: 30em;
+          justify-content: space-between;
+          > li {
+            flex: 1;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 6em;
-            height: 6em;
-            border-radius: 50%;
-            overflow: hidden;
-            // border: 1px solid #000;
-            > img{
-              width: 100%;
-              height: 60%;
-            }
-          }
-          > span {
-              font-weight: 600;
-              color: #7290B0;
-              margin-top: 5px;
-            }
-        }
-        .labelItem{
-          flex: 1;
-          width: 100%;
-          border-radius: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #416594;
-          font-size: 20px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.5s;
-        }
-        .labelItem:hover{
             color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            // background-color: red;
+            &:hover{
+              color: #5e8fd4;
+              transition: all 0.4s;
+            }
           }
-        .labelItemStyle{
-          // background-color: #B0B9C0;
-          color: #fff;
-          // box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
       }
-      .right{
-        flex: 0.65;
-        // position: relative;
+      .userPic {
+        width: 60px;
+        height: 60px;
+        background-color: red;
+        border-radius: 50%;
+        overflow: hidden;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-radius: 30px;
-        overflow: hidden;
-        background-color: rgba(255,255,255,0.5);
-        box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        .content{
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          width: 100%;
+        cursor: pointer;
+        border: 3px solid #fff;
+        > .userPicImg {
+          // width: 100%;
+          // height: 100%;
+          width: 120%;
+          height: 120%;
+          &:hover {
+            transform: scale(1.2);
+            transition: all 0.3s;
+          }
         }
+      }
+    }
+    .focusMap {
+      // margin: 30px;
+      height: 450px;
+      width: 100%;
+      margin:30px auto 0;
+      padding: 0 100px;
+      display: flex;
+      .mapList {
+        // width: 100%;
+        flex: 0.4;
+        overflow: hidden;
+        border-radius: 20px;
+        // background-color: #2A67CC;
+        .mapItem {
+          width: 100%;
+          height: 100%;
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .newsText {
+        flex: 0.6;
+        // background-color: gold;
       }
     }
   }
@@ -192,29 +230,5 @@ export default {
     flex: 1;
     height: 100%;
     width: 100%;
-  }
-  .el-carousel__item:nth-child(1) {
-    background-color: #2A67CC;
-    opacity: 0.7;
-  }
-  .el-carousel__item:nth-child(2) {
-    background-color: #FCBC30;
-    opacity: 0.7;
-  }
-  .el-carousel__item:nth-child(3) {
-    background-color: #4EFDFD;
-    opacity: 0.7;
-  }
-  .el-carousel__item:nth-child(4) {
-    background-color: #F14D40;
-    opacity: 0.7;
-  }
-  .el-carousel__item:nth-child(5) {
-    background-color: #07BC1C;
-    opacity: 0.7;
-  }
-  .el-carousel__item:nth-child(6) {
-    background-color: #94A9FD;
-    opacity: 0.7;
   }
 </style>

@@ -8,16 +8,16 @@
       <div :class="className" style="width: 100%; height: 100%; position: relative;">
         <div class="registerBox">
           <h3 class="boxTitle">S I G N U P</h3>
-          <input type="text" class="inputStyle" placeholder="设置账号" v-model="setUserName">
-        <input type="password" class="inputStyle" placeholder="设置密码" v-model="setPassword">
-        <!-- <input type="password" class="inputStyle" placeholder="确认密码" v-model="setPassword"> -->
-        <input type="button" value="注 册" class="inputBtn" style="color: #7ec9ec;" @click="registerUsreName">
+          <input type="text" class="inputStyle" placeholder="设置账号" v-model.trim="setUserName">
+          <input type="password" class="inputStyle" placeholder="设置密码" v-model.trim="setPassword">
+          <input type="button" value="注 册" class="inputBtn" style="color: #7ec9ec;" @click="registerUsreName">
           <el-link  class="smallBtn" type="primary" @click="gotoLogin" round style="color: #fff;">已有账号？去登入</el-link>
+          <div class="prompt" style="color: red; font-size: 12px;" v-if="isShowPrompt">账号已存在</div>
         </div>
       <div class="loginBox">
         <h3 class="boxTitle">S I G N I N</h3>
-        <input type="text" class="inputStyle" placeholder="输入账号" v-model="accountNumber">
-        <input type="password" class="inputStyle" placeholder="输入密码" v-model="userPassword">
+        <input type="text" class="inputStyle" placeholder="输入账号" v-model.trim="accountNumber">
+        <input type="password" class="inputStyle" placeholder="输入密码" v-model.trim="userPassword">
         <input type="button" value="登 入" class="inputBtn" @click="clickLoginBtn">
         <el-link  class="smallBtn" @click="gotoRegister" round style="color: #fff;">暂无账号？去注册</el-link>
       </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { loginModule, registerUser } from '@/api/userInfoApi'
+import { loginModule, registerUser, userIsExist } from '@/api/userInfoApi'
 export default {
   name: 'myLogin',
   data () {
@@ -39,7 +39,30 @@ export default {
       userPassword: '123456',
       // 注册账号
       setUserName: '',
-      setPassword: ''
+      setPassword: '',
+      flag: true,
+      // 是否提示
+      isShowPrompt: false
+    }
+  },
+  watch: {
+    setUserName (newVal) {
+      if (newVal === '') {
+        this.isShowPrompt = false
+        return
+      }
+      if (this.flag) {
+        clearTimeout(this.flag)
+      }
+      this.flag = setTimeout(async () => {
+        const res = await userIsExist(newVal)
+        console.log(res)
+        if (res.data.status) {
+          this.isShowPrompt = false
+        } else {
+          this.isShowPrompt = true
+        }
+      }, 500)
     }
   },
   methods: {
@@ -62,8 +85,15 @@ export default {
           type: 'success'
         })
         // 将token存放在本地
+        const user = {
+          userId: res.data.userId,
+          accountNumber: this.accountNumber
+        }
         sessionStorage.setItem('myWebiteToken', '123456')
-        this.$router.push('/home')
+        localStorage.setItem('myWebiteUser', JSON.stringify(user))
+        // this.$router.push('/home')
+        // 没有缓存的页面跳转
+        this.$router.replace('/home')
       } else {
         this.$message({
           message: res.data.message,
@@ -77,6 +107,8 @@ export default {
       if (this.setUserName === '' || this.setPassword === '') {
         return this.$message('用户名或密码不能为空')
       }
+      if (this.setUserName.length < 6) return this.$message({ type: 'error', message: '账号长度不能低于六位' })
+      if (this.isShowPrompt) return this.$message({ type: 'error', message: '账号已存在，不能有多个相同的账号' })
       const res = await registerUser(this.setUserName, this.setPassword)
       // 注册用户成功
       if (res.data.status === 1) {
@@ -165,6 +197,11 @@ export default {
     position: absolute;
     right: 20px;
     bottom: 20px;
+  }
+  .prompt {
+    position: absolute;
+    top: 195px;
+    left: 120px;
   }
 }
 // 登入模块

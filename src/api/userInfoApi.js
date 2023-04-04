@@ -12,6 +12,17 @@ export const registerUser = function (username, password) {
   })
 }
 
+// 判断账号是否在数据库中存在
+export const userIsExist = function (accountNumber) {
+  return axios({
+    method: 'get',
+    url: '/api/userIsExist',
+    params: {
+      accountNumber: accountNumber
+    }
+  })
+}
+
 // 登入
 export const loginModule = function (username, password) {
   return axios({
@@ -25,10 +36,14 @@ export const loginModule = function (username, password) {
 }
 
 // 获取用户信息
-export const getUserInfo = function () {
+export const getUserInfo = function (userId, number) {
   return axios({
     method: 'GET',
-    url: '/api/userInfo'
+    url: '/api/userInfo',
+    params: {
+      userId: userId,
+      accountNumber: number
+    }
   })
 }
 
@@ -55,9 +70,21 @@ export const upDataSignature = function (id, str) {
   return axios({
     method: 'POST',
     url: '/api/updataSignature',
-    body: {
+    data: {
       userId: id,
       signature: str
+    }
+  })
+}
+
+export const updataUserPic = function (id, picUrl) {
+  console.log(id, picUrl)
+  return axios({
+    method: 'POST',
+    url: '/api/updataUserPic',
+    data: {
+      userId: id,
+      userPic: picUrl
     }
   })
 }

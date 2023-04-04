@@ -21,5 +21,17 @@ export default {
   }
   input{
     outline:none;
-    }
+  }
+  div::-webkit-scrollbar {
+    width: 4px;
+  }
+  div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    opacity: 0.2;
+  }
+  div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+  }
 </style>

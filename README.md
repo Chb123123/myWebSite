@@ -1,24 +1,9 @@
 # my-webite
 
-## Project setup
-```
-npm install
-```
+## 仓库描述
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+该仓库存放着个人网站源码
 
-### Compiles and minifies for production
-```
-npm run build
-```
+项目截图：
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+下次再来
