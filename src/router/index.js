@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home',
-    component: () => import('@/views/user/userAbout')
+    redirect: '/article',
+    component: () => import('@/views/home/article/index.vue')
   },
   {
     path: '/home',
@@ -26,6 +26,18 @@ const routes = [
     name: 'userABout',
     meta: { title: '用户详情页' },
     component: () => import('@/views/user/userAbout')
+  },
+  {
+    path: '/imageList',
+    name: 'imageList',
+    meta: { title: '图片列表' },
+    component: () => import('@/views/home/imageList/index.vue')
+  },
+  {
+    path: '/article',
+    name: 'article',
+    meta: { title: '文章发布' },
+    component: () => import('@/views/home/article/index.vue')
   }
 ]
 
@@ -35,10 +47,10 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const userInfo = localStorage.getItem('myWebiteUser')
-  if (to.name !== 'login' && !userInfo) next({ name: 'login' })
-  else next()
-})
+// router.beforeEach((to, from, next) => {
+//   const userInfo = localStorage.getItem('myWebiteUser')
+//   if (to.name !== 'login' && !userInfo) next({ name: 'login' })
+//   else next()
+// })
 
 export default router

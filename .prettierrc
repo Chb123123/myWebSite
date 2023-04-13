@@ -1,0 +1,9 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "prettier.eslintIntegration": true,
+  "functionBlankSpaceAll": 2
+}

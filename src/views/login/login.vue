@@ -31,7 +31,7 @@
 import { loginModule, registerUser, userIsExist } from '@/api/userInfoApi'
 export default {
   name: 'myLogin',
-  data () {
+  data() {
     return {
       title: '欢迎',
       className: '',
@@ -46,7 +46,7 @@ export default {
     }
   },
   watch: {
-    setUserName (newVal) {
+    setUserName(newVal) {
       if (newVal === '') {
         this.isShowPrompt = false
         return
@@ -54,7 +54,7 @@ export default {
       if (this.flag) {
         clearTimeout(this.flag)
       }
-      this.flag = setTimeout(async () => {
+      this.flag = setTimeout(async() => {
         const res = await userIsExist(newVal)
         console.log(res)
         if (res.data.status) {
@@ -66,16 +66,16 @@ export default {
     }
   },
   methods: {
-    gotoRegister () {
+    gotoRegister() {
       console.log('去注册')
       this.className = 'animate'
     },
-    gotoLogin () {
+    gotoLogin() {
       console.log('去登入')
       this.className = 'animate1'
     },
     // 登入按钮
-    async clickLoginBtn () {
+    async clickLoginBtn() {
       if (this.className === 'animate') return
       if (this.accountNumber === '' || this.userPassword === '') return this.$message('账号或密码不能为空')
       const res = await loginModule(this.accountNumber, this.userPassword)
@@ -102,7 +102,7 @@ export default {
       }
     },
     // 注册功能
-    async registerUsreName () {
+    async registerUsreName() {
       if (this.className === 'animate1') return
       if (this.setUserName === '' || this.setPassword === '') {
         return this.$message('用户名或密码不能为空')
