@@ -1,24 +1,25 @@
 <template>
   <div class="mainContainer">
-    <div class="title">标题</div>
+    <div class="title">{{ title }}</div>
     <Editor id="tinymce" v-model="myValue" :init="init"></Editor>
     <div class="submitBox">
-      <el-button type="primary" style="margin: 0 20px">发布文章</el-button>
-      <el-button type="info" style="margin: 0 20px">取消编辑</el-button>
+      <el-button type="primary" style="margin: 0 20px" @click="releaseArticle"
+        >发布文章</el-button
+      >
+      <el-button type="info" style="margin: 0 20px" @click="cancelRelease"
+        >取消编辑</el-button
+      >
     </div>
   </div>
 </template>
 
 <script>
-// import { uploadSingleImg } from '@/api/homeViewApi'
-
+import { uploadArticle } from '@/api/homeViewApi'
 import tinymce from 'tinymce/tinymce' // tinymce默认hidden，
 import Editor from '@tinymce/tinymce-vue' // 编辑器引入
 import 'tinymce/themes/silver/theme' // 编辑器主题
 import 'tinymce/icons/default' // 引入编辑器图标icon
 import 'tinymce/models/dom/model'
-
-// import 'tinymce/plugins/textcolor' // 颜色
 import 'tinymce/plugins/advlist' // 高级列表
 import 'tinymce/plugins/autolink' // 自动链接
 import 'tinymce/plugins/link' // 超链接
@@ -30,7 +31,6 @@ import 'tinymce/plugins/wordcount' // 字数统计
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/fullscreen'
 import 'tinymce/plugins/preview'
-// import 'tinymce/plugins/imagetools'
 export default {
   name: 'myArticle',
   components: {
@@ -39,6 +39,8 @@ export default {
   data() {
     return {
       myValue: '',
+      userInfo: {},
+      title: '标题',
       init: {
         selector: '#tinymce',
         language_url: '/static/zh_CN.js', // 汉化路径是自定义的，一般放在public或static里面
@@ -55,59 +57,59 @@ export default {
         height: '80vh', // 高度
         placeholder: '在这里输入内容',
         branding: false, // 隐藏右下角技术支持
-        images_upload_handler: (blobInfo, success, failure) => {
-          // 默认插入base64方式
-          // const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-          // success(img)
-          console.log(blobInfo, '1')
-          // eslint-disable-next-line camelcase
-          // 上传的图片类型
-          // eslint-disable-next-line camelcase
-          const file_type = blobInfo.blob().type
-          console.log(file_type)
-          const name = (blobInfo.filename && blobInfo.filename()) || blobInfo.blob().name
-          // 格式校验 判断上传的文件类型是否是图片
-          const isAccept =
-            // eslint-disable-next-line camelcase
-            file_type === 'image/jpeg' ||
-            // eslint-disable-next-line camelcase
-            file_type === 'image/png' ||
-            // eslint-disable-next-line camelcase
-            file_type === 'image/GIF' ||
-            // eslint-disable-next-line camelcase
-            file_type === 'image/jpg' ||
-            // eslint-disable-next-line camelcase
-            file_type === 'image/BMP'
-          // 大小校验
-          if (blobInfo.blob().size / 1024 / 1024 > 3) {
-            this.$message('上传失败，图片大小请控制在 3M 以内')
-          } else if (!isAccept) {
-            this.$message('图片格式错误')
-          } else {
-            // 上传
-            const formData = new FormData()
-            // 服务端接收文件的参数名，文件数据，文件名
-            formData.append('文件参数', blobInfo.blob(), name)
-            console.log(formData)
-            // const res = uploadSingleImg(formData)
-            // .then((result) => {
-            //   // 这里返回的是你图片的地址
-            //   success(result.url)
-            // })
-            // .catch(() => {
-            //   failure('上传失败')
-            // })
-            // console.log(res)
-          }
-        }
+        images_upload_url: 'http://127.0.0.1/api/uploadImg'
       }
     }
   },
   methods: {
-    uploadImg() {}
+    async releaseArticle() {
+      console.log(this.myValue)
+      if (this.myValue === '') return this.$message('文章内容不能为空！')
+      const res = await uploadArticle(
+        this.userInfo.userId,
+        this.myValue,
+        this.title
+      )
+      console.log(res.data)
+      if (res.data.status === 1) {
+        console.log(res.data)
+        this.$message({
+          type: 'success',
+          message: res.data.message
+        })
+        // 跳转到首页
+        this.$router.push('/home')
+      } else {
+        this.$message({
+          type: 'error',
+          message: res.data.message
+        })
+      }
+    },
+    cancelRelease() {
+      console.log('取消编辑')
+      this.$confirm('退出编辑将不保存输入的数据, 是否继续?', '退出编辑', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$router.push('/home')
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已退出'
+          })
+        })
+    }
   },
   mounted() {
     tinymce.init({})
+  },
+  created() {
+    this.userInfo = JSON.parse(localStorage.getItem('myWebiteUser'))
+    console.log(localStorage.getItem('myWebiteUser'))
   }
 }
 </script>

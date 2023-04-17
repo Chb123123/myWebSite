@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/article',
-    component: () => import('@/views/home/article/index.vue')
+    redirect: '/home',
+    component: () => import('@/views/home')
   },
   {
     path: '/home',
@@ -47,10 +47,10 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const userInfo = localStorage.getItem('myWebiteUser')
-//   if (to.name !== 'login' && !userInfo) next({ name: 'login' })
-//   else next()
-// })
+router.beforeEach((to, from, next) => {
+  const userInfo = localStorage.getItem('myWebiteUser')
+  if (to.name !== 'login' && !userInfo) next({ name: 'login' })
+  else next()
+})
 
 export default router

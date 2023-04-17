@@ -1,30 +1,32 @@
 <template>
   <div class="container">
-    <div class="headerTable">
-      <div class="webiteTitle">个 人 网 站</div>
-      <div class="headerNav">
-        <ul>
-          <li
-            v-for="item in navList"
-            :key="item.id"
-            @click="gotoView(item.id)"
-            :style="item.id === navIndex ? 'color: #5e8fd4' : ''"
+    <el-collapse-transition>
+      <div class="headerTable" v-show="showHeader">
+        <!-- <div class="webiteTitle">个 人 网 站</div> -->
+        <div class="headerNav">
+          <ul>
+            <li
+              v-for="item in navList"
+              :key="item.id"
+              @click="gotoView(item.id)"
+              :style="item.id === navIndex ? 'color: #5e8fd4' : ''"
+            >
+              {{ item.title }}
+            </li>
+          </ul>
+        </div>
+        <div class="userPic">
+          <el-image
+            class="userPicImg"
+            style="width: 100%; height: 100%"
+            :src="userInfo.user_pic"
+            :preview-src-list="srcList"
           >
-            {{ item.title }}
-          </li>
-        </ul>
+          </el-image>
+        </div>
       </div>
-      <div class="userPic">
-        <!-- <img :src="userInfo.user_pic" alt="" title="查看"> -->
-        <el-image
-          class="userPicImg"
-          style="width: 100%; height: 100%"
-          :src="userInfo.user_pic"
-          :preview-src-list="srcList"
-        >
-        </el-image>
-      </div>
-    </div>
+    </el-collapse-transition>
+    <div style="height: 1000px"></div>
     <!-- 焦点图 -->
     <div class="focusMap">
       <div class="mapList">
@@ -56,6 +58,9 @@ export default {
       srcList: [],
       // 焦点图列表
       fouceMap: [],
+      showHeader: true,
+      scrollHeight: 0,
+      scrollFalg: true,
       navList: [
         {
           id: 0,
@@ -78,16 +83,12 @@ export default {
   },
   created() {
     const user = JSON.parse(localStorage.getItem('myWebiteUser'))
-    if (!user) {
-      this.$router.push('/login')
-    }
     this.getUser(user.userId, user.accountNumber)
     this.getFouseMap(user.userId)
   },
   methods: {
     async getUser(userId, accountNumber) {
       const res = await getUserInfo(userId, accountNumber)
-      console.log(res)
       if (res.data.status === 1) {
         this.userInfo = res.data.queryData
         this.srcList.push(this.userInfo.user_pic)
@@ -114,11 +115,24 @@ export default {
     // 获取轮播图列表
     async getFouseMap(id) {
       const res = await getFouseMapList(id)
-      console.log(res)
       if (res.data.status !== 1) return this.$message('获取轮播图失败')
       this.fouceMap = res.data.queryData
-      console.log(this.fouceMap)
+    },
+    handleScroll() {
+      if (this.scrollFalg) {
+        clearTimeout(this.scrollFalg)
+      }
+      this.scrollFalg = setTimeout(() => {
+        const scrollTop =
+          window.pageYOffset ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop
+        console.log(scrollTop, '滚动距离')
+      }, 100)
     }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll) // 监听页面滚动
   }
 }
 </script>
@@ -128,7 +142,7 @@ export default {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  // overflow: auto;
   // background-color: red;
   background-image: url('@/assets/bg.jpg');
   background-size: 100% 100%;

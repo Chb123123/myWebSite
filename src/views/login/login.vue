@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import '@/util/sakura.js'
 import { loginModule, registerUser, userIsExist } from '@/api/userInfoApi'
 export default {
   name: 'myLogin',

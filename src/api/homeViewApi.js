@@ -10,13 +10,15 @@ export const getFouseMapList = function(id) {
   })
 }
 
-// 上传单个图片
-export const uploadSingleImg = function(files) {
+// 用户发布文章
+export const uploadArticle = function(userId, article, title) {
   return axios({
     method: 'post',
-    url: '/api/uploadImg',
+    url: '/api/releaseArticle',
     data: {
-      files: files
+      userId: userId,
+      article: article,
+      title: title
     }
   })
 }
