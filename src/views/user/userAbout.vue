@@ -9,7 +9,7 @@
       <div class="loadBox">
         <el-upload
           class="avatar-uploader"
-          action="http://127.0.0.1/api/uploadUserPic"
+          :action= "$baseUrl +'/api/uploadUserPic'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
