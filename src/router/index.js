@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/imageList',
-    component: () => import('@/views/home/imageList/index.vue')
+    redirect: '/home',
+    component: () => import('@/views/home')
   },
   {
     path: '/home',

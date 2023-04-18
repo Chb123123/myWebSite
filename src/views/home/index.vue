@@ -68,7 +68,7 @@ export default {
         },
         {
           id: 1,
-          title: '个人作品'
+          title: '查看图片'
         },
         {
           id: 2,
@@ -99,10 +99,10 @@ export default {
     gotoView(id) {
       switch (id) {
         case 0:
-          this.$router('/home')
+          this.$router.push('/home')
           break
         case 1:
-          console.log('个人作品')
+          this.$router.push('/imageList')
           break
         case 2:
           this.$router.push('/user')
