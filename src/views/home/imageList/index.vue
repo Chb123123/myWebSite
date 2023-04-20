@@ -105,18 +105,22 @@ export default {
     async getInfoData() {
       this.loading = true
       this.page++
-      const res = await getViewImages(this.page, 30, this.imgType)
-      if (res.data.status === 1) {
-        res.data.queryData.results.forEach((item) => {
-          item.url = `${this.$baseUrl}${item.url}`
-        })
-        this.total = res.data.queryData.total
-        this.imgList = [...this.imgList, ...res.data.queryData.results]
-      } else {
-        this.$message({
-          type: 'error',
-          message: res.data.message
-        })
+      try {
+        const res = await getViewImages(this.page, 30, this.imgType)
+        if (res.data.status === 1) {
+          res.data.queryData.results.forEach((item) => {
+            item.url = `${this.$baseUrl}${item.url}`
+          })
+          this.total = res.data.queryData.total
+          this.imgList = [...this.imgList, ...res.data.queryData.results]
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      } catch (err) {
+        console.log(err)
       }
     },
     handleScroll() {

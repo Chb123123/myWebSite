@@ -4,7 +4,7 @@ import axios from '@/util/defaultUrl'
 export const registerUser = function(username, password) {
   return axios({
     method: 'post',
-    url: '/api/registerUser',
+    url: '/my/registerUser',
     data: {
       accountNumber: username,
       password: password
@@ -16,7 +16,7 @@ export const registerUser = function(username, password) {
 export const userIsExist = function(accountNumber) {
   return axios({
     method: 'get',
-    url: '/api/userIsExist',
+    url: '/my/userIsExist',
     params: {
       accountNumber: accountNumber
     }
@@ -27,7 +27,7 @@ export const userIsExist = function(accountNumber) {
 export const loginModule = function(username, password) {
   return axios({
     method: 'post',
-    url: '/api/loginFunction',
+    url: '/my/loginFunction',
     data: {
       accountNumber: username,
       password: password

@@ -17,7 +17,7 @@ const routes = [
     component: () => import('@/views/home'),
     children: [
       {
-        path: '/articleList',
+        path: 'articleList',
         name: 'articleList',
         meta: { title: '文章列表' },
         component: () => import('@/views/home/article/acticleList.vue')

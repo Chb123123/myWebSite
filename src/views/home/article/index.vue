@@ -64,24 +64,28 @@ export default {
   methods: {
     async releaseArticle() {
       if (this.myValue === '') return this.$message('文章内容不能为空！')
-      const res = await uploadArticle(
-        this.userInfo.userId,
-        this.myValue,
-        this.title
-      )
-      console.log(res.data)
-      if (res.data.status === 1) {
-        this.$message({
-          type: 'success',
-          message: res.data.message
-        })
-        // 跳转到首页
-        this.$router.push('/articleList')
-      } else {
-        this.$message({
-          type: 'error',
-          message: res.data.message
-        })
+      try {
+        const res = await uploadArticle(
+          this.userInfo.userId,
+          this.myValue,
+          this.title
+        )
+        console.log(res.data)
+        if (res.data.status === 1) {
+          this.$message({
+            type: 'success',
+            message: res.data.message
+          })
+          // 跳转到首页
+          this.$router.push('/home')
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      } catch (err) {
+        console.log(err)
       }
     },
     cancelRelease() {
@@ -91,7 +95,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.$router.push('/articleList')
+          this.$router.push('/home')
         })
         .catch(() => {
           this.$message({
