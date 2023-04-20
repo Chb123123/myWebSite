@@ -1,4 +1,5 @@
 import axios from '@/util/defaultUrl'
+const userInfo = JSON.parse(localStorage.getItem('myWebiteUser'))
 
 export const getFouseMapList = function(id) {
   return axios({
@@ -20,5 +21,21 @@ export const uploadArticle = function(userId, article, title) {
       article: article,
       title: title
     }
+  })
+}
+
+// 获取用户发布的文章
+export const getUserArticleList = function(page, size) {
+  const data = {
+    userId: userInfo.userId
+  }
+  if (page || size) {
+    data.page = page
+    data.size = size
+  }
+  return axios({
+    method: 'get',
+    url: '/api/getArticleList',
+    params: data
   })
 }

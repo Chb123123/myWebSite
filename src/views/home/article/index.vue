@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     async releaseArticle() {
-      console.log(this.myValue)
       if (this.myValue === '') return this.$message('文章内容不能为空！')
       const res = await uploadArticle(
         this.userInfo.userId,
@@ -72,13 +71,12 @@ export default {
       )
       console.log(res.data)
       if (res.data.status === 1) {
-        console.log(res.data)
         this.$message({
           type: 'success',
           message: res.data.message
         })
         // 跳转到首页
-        this.$router.push('/home')
+        this.$router.push('/articleList')
       } else {
         this.$message({
           type: 'error',
@@ -87,14 +85,13 @@ export default {
       }
     },
     cancelRelease() {
-      console.log('取消编辑')
       this.$confirm('退出编辑将不保存输入的数据, 是否继续?', '退出编辑', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          this.$router.push('/home')
+          this.$router.push('/articleList')
         })
         .catch(() => {
           this.$message({
@@ -109,7 +106,6 @@ export default {
   },
   created() {
     this.userInfo = JSON.parse(localStorage.getItem('myWebiteUser'))
-    console.log(localStorage.getItem('myWebiteUser'))
   }
 }
 </script>

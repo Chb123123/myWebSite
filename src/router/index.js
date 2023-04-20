@@ -6,14 +6,23 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home',
-    component: () => import('@/views/home')
+    redirect: '/imageList',
+    component: () => import('@/views/home/imageList/index.vue')
   },
   {
     path: '/home',
     name: 'home',
+    redirect: '/home/articleList',
     meta: { title: '首页' },
-    component: () => import('@/views/home')
+    component: () => import('@/views/home'),
+    children: [
+      {
+        path: '/articleList',
+        name: 'articleList',
+        meta: { title: '文章列表' },
+        component: () => import('@/views/home/article/acticleList.vue')
+      }
+    ]
   },
   {
     path: '/login',

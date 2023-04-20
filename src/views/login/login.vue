@@ -90,7 +90,7 @@ export default {
           userId: res.data.userId,
           accountNumber: this.accountNumber
         }
-        sessionStorage.setItem('myWebiteToken', '123456')
+        sessionStorage.setItem('myWebiteToken', res.data.token)
         localStorage.setItem('myWebiteUser', JSON.stringify(user))
         // this.$router.push('/home')
         // 没有缓存的页面跳转

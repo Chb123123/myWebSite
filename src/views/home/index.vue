@@ -26,7 +26,6 @@
         </div>
       </div>
     </el-collapse-transition>
-    <div style="height: 1000px"></div>
     <!-- 焦点图 -->
     <div class="focusMap">
       <div class="mapList">
@@ -39,6 +38,9 @@
         </el-carousel>
       </div>
       <div class="newsText"></div>
+    </div>
+    <div class="articleList">
+      <router-view />
     </div>
   </div>
 </template>
@@ -68,7 +70,7 @@ export default {
         },
         {
           id: 1,
-          title: '查看图片'
+          title: '图片'
         },
         {
           id: 2,
@@ -142,10 +144,9 @@ export default {
   position: relative;
   width: 100vw;
   height: 100vh;
-  // overflow: auto;
-  // background-color: red;
   background-image: url('@/assets/bg.jpg');
   background-size: 100% 100%;
+  overflow: auto;
   .headerTable {
     display: flex;
     justify-content: space-between;
@@ -244,6 +245,12 @@ export default {
       flex: 0.6;
       // background-color: gold;
     }
+  }
+  .articleList {
+    width: 70%;
+    margin: 20px auto;
+    // background-color: #fff;
+    border-radius: 30px;
   }
 }
 /deep/.el-carousel__container {
