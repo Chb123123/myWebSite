@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/imageList',
-    component: () => import('@/views/home/imageList/index.vue')
+    redirect: '/homeCharts',
+    component: () => import('@/views/home/charts/homeView.vue')
   },
   {
     path: '/home',
@@ -47,6 +47,12 @@ const routes = [
     name: 'article',
     meta: { title: '文章发布' },
     component: () => import('@/views/home/article/index.vue')
+  },
+  {
+    path: '/homeCharts',
+    name: 'homeCharts',
+    meta: { title: '首页图表' },
+    component: () => import('@/views/home/charts/homeView.vue')
   }
 ]
 
