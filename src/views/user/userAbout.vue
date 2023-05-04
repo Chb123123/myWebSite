@@ -13,6 +13,7 @@
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
+          :headers="tokenInfo"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -91,6 +92,14 @@ export default {
       srcList: [],
       labelList: [],
       dialogVisible: false
+    }
+  },
+  computed: {
+    // eslint-disable-next-line vue/no-unused-components
+    tokenInfo() {
+      return {
+        authorization: sessionStorage.getItem('webiteToken')
+      }
     }
   },
   methods: {

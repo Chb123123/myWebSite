@@ -159,6 +159,7 @@ export default {
   width: 100vw;
   padding: 70px 0 0;
   height: 100vh;
+  background-color: #000;
   .headerTitle {
     position: fixed;
     top: 0;
@@ -169,8 +170,9 @@ export default {
     height: 70px;
     width: 100%;
     font-size: 26px;
-    background-color: #fff;
+    background-color: #000;
     z-index: 999999;
+    color: #fff;
     box-sizing: 0 0 10px rgba(255, 255, 255, 0.7);
     .titleItem {
       width: 120px;

@@ -96,7 +96,8 @@ export default {
       setPassword: '',
       flag: true,
       // 是否提示
-      isShowPrompt: false
+      isShowPrompt: false,
+      canvasDom: null
     }
   },
   watch: {
@@ -118,6 +119,11 @@ export default {
         }
       }, 500)
     }
+  },
+  mounted() {
+    this.canvasDom = document.getElementById('canvas_sakura')
+    console.log(this.canvasDom)
+    this.canvasDom.style.display = 'block'
   },
   methods: {
     gotoRegister() {
@@ -202,7 +208,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .mainContainer {
   position: relative;
   width: 100vw;

@@ -6,23 +6,29 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/homeCharts',
-    component: () => import('@/views/home/charts/homeView.vue')
+    redirect: '/main',
+    component: () => import('@/views/main/index.vue')
+  },
+  {
+    path: '/main',
+    name: 'main',
+    meta: { title: '初始页' },
+    component: () => import('@/views/main/index.vue')
   },
   {
     path: '/home',
     name: 'home',
-    redirect: '/home/articleList',
+    // redirect: '/home',
     meta: { title: '首页' },
-    component: () => import('@/views/home'),
-    children: [
-      {
-        path: 'articleList',
-        name: 'articleList',
-        meta: { title: '文章列表' },
-        component: () => import('@/views/home/article/acticleList.vue')
-      }
-    ]
+    component: () => import('@/views/home')
+    // children: [
+    //   {
+    //     path: 'articleList',
+    //     name: 'articleList',
+    //     meta: { title: '文章列表' },
+    //     component: () => import('@/views/home/article/acticleList.vue')
+    //   }
+    // ]
   },
   {
     path: '/login',
