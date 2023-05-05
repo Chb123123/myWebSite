@@ -12,8 +12,8 @@ export default {
   name: 'mainViews',
   methods: {
     clickBtn() {
-      console.log(sessionStorage.getItem('webiteToken'))
-      if (!sessionStorage.getItem('webiteToken')) {
+      console.log(localStorage.getItem('webiteToken'))
+      if (!localStorage.getItem('webiteToken')) {
         this.$message('未登入, 前往登入页面')
         this.$router.replace('/login')
       } else {

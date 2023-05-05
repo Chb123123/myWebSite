@@ -3,3 +3,4 @@ src/assets
 src/util/sakura.js
 public
 dist
+node_modules

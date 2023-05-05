@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: 'http://127.0.0.1',
   timeout: 5000,
   headers: {
-    Authorization: sessionStorage.getItem('webiteToken')
+    Authorization: localStorage.getItem('webiteToken')
     // "admin-token":'123456',
     // "Client-Type": 'MALL_MOBILE',
     // "Client-Type": 'application/json',
@@ -27,8 +27,8 @@ instance.interceptors.request.use((config) => {
   //   };
   // }
   // console.log(config);
-  if (sessionStorage.getItem('webiteToken') != null) {
-    config.headers.Authorization = sessionStorage.getItem('webiteToken')
+  if (localStorage.getItem('webiteToken') != null) {
+    config.headers.Authorization = localStorage.getItem('webiteToken')
   }
 
   return config
