@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/main',
-    component: () => import('@/views/main/index.vue')
+    redirect: '/works',
+    component: () => import('@/views/home/works/showWorks.vue')
   },
   {
     path: '/main',
@@ -18,17 +18,8 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    // redirect: '/home',
     meta: { title: '首页' },
     component: () => import('@/views/home')
-    // children: [
-    //   {
-    //     path: 'articleList',
-    //     name: 'articleList',
-    //     meta: { title: '文章列表' },
-    //     component: () => import('@/views/home/article/acticleList.vue')
-    //   }
-    // ]
   },
   {
     path: '/login',
@@ -53,6 +44,12 @@ const routes = [
     name: 'article',
     meta: { title: '文章发布' },
     component: () => import('@/views/home/article/index.vue')
+  },
+  {
+    path: '/works',
+    name: 'works',
+    meta: { title: '用户作品' },
+    component: () => import('@/views/home/works/showWorks.vue')
   },
   {
     path: '/homeCharts',
