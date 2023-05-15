@@ -46,7 +46,12 @@ export default {
       this.ctx.beginPath()
       this.ctx.lineWidth = 5 * this.rem
       // 修改边框颜色
-      this.ctx.strokeStyle = '#f00'
+      const gr = this.ctx.createRadialGradient(50, 50, 25, 50, 50, 100)
+      gr.addColorStop(0, 'rgb(244,100,154)')
+      gr.addColorStop(1, 'rgb(0,210,246)')
+      // gr.addColorStop(0.7, 'rgb(0,0,246)')
+      // gr.addColorStop(0.8, 'rgb(0,210,0)')
+      this.ctx.strokeStyle = gr
       // 以0，0为原点，r为半径，0为起始角，2*Math.PI为结束角，顺时针画圆
       this.ctx.arc(0, 0, this.r - this.ctx.lineWidth / 2, 0, 2 * Math.PI, false)
       this.ctx.stroke()
@@ -54,13 +59,14 @@ export default {
       this.ctx.font = 18 * this.rem + 'px Arial'
       this.ctx.textAlign = 'center'
       this.ctx.textBaseline = 'middle'
+      this.ctx.fillStyle = '#fff'
       // 画出1-12的数字
       for (let i = 0; i < hourNumber.length; i++) {
         const rad = ((2 * Math.PI) / 12) * i
         const x = Math.cos(rad) * (this.r - 30 * this.rem)
         const y = Math.sin(rad) * (this.r - 30 * this.rem)
         this.ctx.fillText(hourNumber[i], x, y)
-        this.ctx.fillStyle = '#f00'
+        this.ctx.strokeStyle = '#fff'
       }
       // 画出秒针走动的60个点
       for (let i = 0; i < 60; i++) {
@@ -70,10 +76,10 @@ export default {
         this.ctx.beginPath()
         if (i % 5 === 0) {
           // 大线段
-          this.ctx.fillStyle = '#000'
+          this.ctx.fillStyle = gr
           this.ctx.arc(x, y, 2 * this.rem, 0, 2, 2 * Math.PI, false)
         } else {
-          this.ctx.fillStyle = '#000'
+          this.ctx.fillStyle = gr
           this.ctx.arc(x, y, 2 * this.rem, 0, 2, 2 * Math.PI, false)
         }
         this.ctx.fill()
@@ -83,7 +89,7 @@ export default {
     drawHour(hour, minute) {
       this.ctx.save()
       this.ctx.beginPath()
-      this.ctx.strokeStyle = '#999'
+      this.ctx.strokeStyle = '#FBEA93'
       var rad = ((2 * Math.PI) / 12) * hour
       var mrad = ((2 * Math.PI) / 12 / 60) * minute
       this.ctx.rotate(rad + mrad)
@@ -98,7 +104,7 @@ export default {
     drawMinute(minute) {
       this.ctx.save()
       this.ctx.beginPath()
-      this.ctx.fillStyle = '#fff'
+      this.ctx.strokeStyle = '#448EBB'
       var rad = ((2 * Math.PI) / 60) * minute
       this.ctx.rotate(rad)
       this.ctx.lineWidth = 3 * this.rem
@@ -112,7 +118,7 @@ export default {
     drawSecond(second) {
       this.ctx.save()
       this.ctx.beginPath()
-      this.ctx.fillStyle = '#f00'
+      this.ctx.fillStyle = '#fff'
       var rad = ((2 * Math.PI) / 60) * second
       this.ctx.rotate(rad)
       this.ctx.moveTo(-2, 20 * this.rem)

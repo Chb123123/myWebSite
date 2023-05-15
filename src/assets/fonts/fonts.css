@@ -1,0 +1,9 @@
+/* 阿里妈妈数黑体*/
+@font-face {
+  font-family: "AliMaMa";
+  src: url('./Smiley_Sans_Oblique_斜体.woff') format("woff"),
+    url('./Smiley_Sans_Oblique_斜体.woff2') format("woff2"),
+    url('./Smiley_Sans_Oblique_斜体.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}

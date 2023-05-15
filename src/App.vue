@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// 导入字体
+import '@/assets/fonts/fonts.css'
 export default {}
 </script>
 
@@ -10,6 +12,9 @@ export default {}
 * {
   margin: 0;
   padding: 0;
+  // 设置字体为自定义字体
+  font-family: 'AliMaMa';
+  font-display: swap;
 }
 ul,
 li {

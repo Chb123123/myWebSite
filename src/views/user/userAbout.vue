@@ -1,6 +1,27 @@
 <template>
   <div class="mainContainer" v-loading="loading">
-    <el-dialog
+    <div class="headerTextContent">
+      <div class="headerText">Personal Details</div>
+    </div>
+    <div class="container">
+      <!-- 左侧内容 -->
+      <div class="clockContent">
+        <div class="box">
+          <ClockTemp></ClockTemp>
+          <div class="rightBox">
+            <span style="font-size: 60px">{{ nowTime }}</span>
+            <span style="font-size: 28px">{{ nowDate }}</span>
+            <span style="font-size: 28px">{{ nowWeek }}</span>
+          </div>
+        </div>
+        <div class="box1"></div>
+      </div>
+      <!-- 中间内容 -->
+      <div class="centerContent"></div>
+      <!-- 右侧内容 -->
+      <div class="rightContent"></div>
+    </div>
+    <!-- <el-dialog
       title="修改头像"
       :visible.sync="dialogVisible"
       width="400px"
@@ -68,11 +89,12 @@
           </el-carousel>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import ClockTemp from '@/components/clock/index.vue'
 import {
   getUserInfo,
   getUserIndex,
@@ -82,6 +104,9 @@ import {
 } from '@/api/userInfoApi'
 export default {
   name: 'userAbout',
+  components: {
+    ClockTemp
+  },
   data() {
     return {
       loading: false,
@@ -91,7 +116,11 @@ export default {
       newIndex: 0,
       srcList: [],
       labelList: [],
-      dialogVisible: false
+      dialogVisible: false,
+      worksList: [],
+      nowDate: '', // 当前日期
+      nowTime: '', // 当前时间
+      nowWeek: '' // 当前星期
     }
   },
   computed: {
@@ -182,6 +211,42 @@ export default {
       } else {
         this.$message(res.data.message)
       }
+    },
+    currentTime() {
+      setInterval(this.getDate, 1000)
+    },
+    getDate() {
+      var _this = this
+      const yy = new Date().getFullYear()
+      const mm = new Date().getMonth() + 1
+      const dd = new Date().getDate()
+      const week = new Date().getDay()
+      const hh = new Date().getHours()
+      const mf =
+        new Date().getMinutes() < 10
+          ? '0' + new Date().getMinutes()
+          : new Date().getMinutes()
+      const second =
+        new Date().getSeconds() < 10
+          ? '0' + new Date().getSeconds()
+          : new Date().getSeconds()
+      if (week === 1) {
+        this.nowWeek = '星期一'
+      } else if (week === 2) {
+        this.nowWeek = '星期二'
+      } else if (week === 3) {
+        this.nowWeek = '星期三'
+      } else if (week === 4) {
+        this.nowWeek = '星期四'
+      } else if (week === 5) {
+        this.nowWeek = '星期五'
+      } else if (week === 6) {
+        this.nowWeek = '星期六'
+      } else {
+        this.nowWeek = '星期日'
+      }
+      _this.nowTime = hh + ':' + mf + ':' + second
+      _this.nowDate = yy + '年' + mm + '月' + dd + '日'
     }
   },
   created() {
@@ -190,12 +255,91 @@ export default {
       this.$router.push('/login')
     }
     this.localUser = user
+    this.currentTime()
+    this.getWorksList()
     this.getUser(user.userId, user.accountNumber)
+  },
+  beforeDestroy() {
+    if (this.getDate) {
+      console.log('销毁定时器')
+      clearInterval(this.getDate) // 在Vue实例销毁前，清除时间定时器
+    }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+.mainContainer {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  background: url(http://127.0.0.1/images/viewsImg/1681725536144.jpg);
+  background-size: 100% 100%;
+  .headerTextContent {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 30px;
+    height: 120px;
+    line-height: 120px;
+    width: 700px;
+    // border: 1px solid #ccc;
+    border-left: 0;
+    margin-bottom: 40px;
+    border-radius: 0 60px 60px 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    .headerText {
+      height: 64px;
+      // width: 100px;
+      line-height: 64px;
+      background: linear-gradient(
+        to top,
+        rgb(188, 142, 249) 0%,
+        rgba(0, 0, 255, 0.8) 50%,
+        rgb(128, 0, 128) 80%
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 64px;
+      text-align: center;
+      // text-shadow: 0 0 10px rgba(255,255,255,0.6);
+      font-weight: 700;
+    }
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    height: 100%;
+    // border: 1px solid #ccc;
+    margin: auto;
+    .clockContent {
+      padding: 20px 10px;
+      height: 420px;
+      width: 470px;
+      flex: 0.33;
+      // border: 1px solid #ccc;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+    .centerContent {
+      flex: 0.33;
+      // height: 420px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+    .rightContent {
+      flex: 0.25;
+      // height: 420px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -331,5 +475,45 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+// ----------------------
+.box {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 20px;
+  z-index: 10;
+  margin-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.box1 {
+  display: flex;
+  align-items: center;
+  height: 110px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.rightBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  flex: 1;
+  height: 100%;
+  // border: 1px solid #ccc;
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 25%;
+    margin: 5px 0;
+    // border: 1px solid #ccc;
+    color: #fff;
+  }
 }
 </style>
