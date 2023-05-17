@@ -17,7 +17,34 @@
         <div class="box1"></div>
       </div>
       <!-- 中间内容 -->
-      <div class="centerContent"></div>
+      <div class="centerContent">
+        <div class="userInfo">
+          <div class="userLeft">
+            <img :src="userInfo.user_pic" alt="" />
+          </div>
+          <div class="userRight">
+            <span>123</span>
+            <span style="font-size: 28px;">{{ userInfo.userName }}</span>
+            <span calss="famousQuote">{{ userInfo.user_signature }}</span>
+            <div class="editBtn">
+              <i class="el-icon-edit-outline"></i>
+            </div>
+          </div>
+          <div class="userBottom">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="webiteFunction">
+          <div class="FunctionHeader">网站功能</div>
+          <div class="FunctionContent">
+            <span>图片鉴赏</span>
+            <span>文章发布</span>
+            <span>网站收藏</span>
+            <span>作品发布</span>
+          </div>
+        </div>
+      </div>
       <!-- 右侧内容 -->
       <div class="rightContent"></div>
     </div>
@@ -190,6 +217,7 @@ export default {
       if (res.data.status === 1) {
         this.userInfo = res.data.queryData
         this.srcList.push(this.userInfo.user_pic)
+        console.log(this.userInfo)
       } else {
         this.$message(res.data.message)
       }
@@ -256,12 +284,10 @@ export default {
     }
     this.localUser = user
     this.currentTime()
-    this.getWorksList()
     this.getUser(user.userId, user.accountNumber)
   },
   beforeDestroy() {
     if (this.getDate) {
-      console.log('销毁定时器')
       clearInterval(this.getDate) // 在Vue实例销毁前，清除时间定时器
     }
   }
@@ -292,9 +318,9 @@ export default {
     background-color: rgba(255, 255, 255, 0.6);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
+    // 设置渐变字体
     .headerText {
       height: 64px;
-      // width: 100px;
       line-height: 64px;
       background: linear-gradient(
         to top,
@@ -306,7 +332,6 @@ export default {
       color: transparent;
       font-size: 64px;
       text-align: center;
-      // text-shadow: 0 0 10px rgba(255,255,255,0.6);
       font-weight: 700;
     }
   }
@@ -322,19 +347,124 @@ export default {
       height: 420px;
       width: 470px;
       flex: 0.33;
-      // border: 1px solid #ccc;
       border-radius: 20px;
       background-color: rgba(255, 255, 255, 0.4);
     }
     .centerContent {
       flex: 0.33;
-      // height: 420px;
-      border-radius: 20px;
-      background-color: rgba(255, 255, 255, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .userInfo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        height: 250px;
+        padding: 20px 30px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        background-color: rgba(255, 255, 255, 0.4);
+        .userLeft {
+          height: 150px;
+          width: 150px;
+          margin-right: 10px;
+          > img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+          }
+        }
+        .userRight {
+          position: relative;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 130px;
+          padding: 10px 0;
+          border: 1px solid #ccc;
+          margin-bottom: 20px;
+          > span {
+            color: #fff;
+          }
+          .famousQuote {
+            height: 30px;
+            line-height: 30px;
+            border-radius: 10px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.4);
+          }
+          .editBtn {
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            line-height: 40px;
+            top: 0;
+            right: 0;
+            font-size: 32px;
+            color: #fff;
+            cursor: pointer;
+          }
+        }
+        .userBottom {
+          height: 50px;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.4);
+          > span {
+            height: 30px;
+            border-radius: 10px;
+            width: 100px;
+            margin: 0 20px;
+            background-color: #409eff;
+            z-index: -1;
+          }
+        }
+      }
+      .webiteFunction {
+        height: 230px;
+        width: 100%;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.4);
+        .FunctionHeader {
+          height: 45px;
+          line-height: 45px;
+          font-size: 24px;
+          color: #fff;
+          width: 100%;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #fff;
+        }
+        .FunctionContent {
+          height: 150px;
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          padding: 20px;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            display: flex;
+            width: 40%;
+            height: 50px;
+            margin: 0 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.4);
+          }
+        }
+      }
     }
     .rightContent {
       flex: 0.25;
-      // height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       border-radius: 20px;
       background-color: rgba(255, 255, 255, 0.4);
     }
@@ -482,7 +612,6 @@ export default {
   height: 250px;
   width: 100%;
   display: flex;
-  // justify-content: center;
   align-items: center;
   padding: 0 20px;
   border-radius: 20px;
@@ -507,12 +636,11 @@ export default {
   height: 100%;
   // border: 1px solid #ccc;
   > span {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    // height: 25%;
     margin: 5px 0;
-    // border: 1px solid #ccc;
     color: #fff;
   }
 }
