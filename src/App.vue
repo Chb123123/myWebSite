@@ -4,7 +4,9 @@
 
 <script>
 // 导入字体
-import '@/assets/fonts/fonts.css'
+// import '@/assets/fonts/fonts.css'
+// 站酷仓耳渔阳体
+import '@/assets/fonts1/fonts.css'
 export default {}
 </script>
 
@@ -13,7 +15,9 @@ export default {}
   margin: 0;
   padding: 0;
   // 设置字体为自定义字体
-  font-family: 'AliMaMa';
+  // font-family: 'AliMaMa';
+  // 站酷仓耳渔阳体
+  font-family: 'Version';
   font-display: swap;
 }
 ul,

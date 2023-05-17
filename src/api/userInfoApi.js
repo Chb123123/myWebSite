@@ -78,13 +78,25 @@ export const upDataSignature = function(id, str) {
 }
 
 export const updataUserPic = function(id, picUrl) {
-  console.log(id, picUrl)
   return axios({
     method: 'POST',
     url: '/api/updataUserPic',
     data: {
       userId: id,
       userPic: picUrl
+    }
+  })
+}
+
+export const updataUserInfo = function(userName, userId, userPic, userSignature) {
+  return axios({
+    method: 'POST',
+    url: '/api/updataUserInfo',
+    data: {
+      userName: userName,
+      userId: userId,
+      user_pic: userPic,
+      user_signature: userSignature
     }
   })
 }

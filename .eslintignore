@@ -1,6 +1,8 @@
 build/*.js
 src/assets
 src/util/sakura.js
+src/assets/fonts1/
+src/assets/fonts/
 public
 dist
 node_modules

@@ -9,7 +9,7 @@
         <div class="box">
           <ClockTemp></ClockTemp>
           <div class="rightBox">
-            <span style="font-size: 60px">{{ nowTime }}</span>
+            <span style="font-size: 48px">{{ nowTime }}</span>
             <span style="font-size: 28px">{{ nowDate }}</span>
             <span style="font-size: 28px">{{ nowWeek }}</span>
           </div>
@@ -24,9 +24,9 @@
           </div>
           <div class="userRight">
             <span>123</span>
-            <span style="font-size: 28px;">{{ userInfo.userName }}</span>
+            <span style="font-size: 28px">{{ userInfo.userName }}</span>
             <span calss="famousQuote">{{ userInfo.user_signature }}</span>
-            <div class="editBtn">
+            <div class="editBtn" @click="updateUserInfo">
               <i class="el-icon-edit-outline"></i>
             </div>
           </div>
@@ -46,7 +46,9 @@
         </div>
       </div>
       <!-- 右侧内容 -->
-      <div class="rightContent"></div>
+      <div class="rightContent">
+        <div class="rightTop"></div>
+      </div>
     </div>
     <!-- <el-dialog
       title="修改头像"
@@ -127,7 +129,8 @@ import {
   getUserIndex,
   getTableInfo,
   upDataSignature,
-  updataUserPic
+  updataUserPic,
+  updataUserInfo
 } from '@/api/userInfoApi'
 export default {
   name: 'userAbout',
@@ -159,6 +162,25 @@ export default {
     }
   },
   methods: {
+    // 点击修改用户按钮
+    updateUserInfo() {
+      console.log('修改用户信息按钮')
+    },
+    async saveUserInfo() {
+      try {
+        const res = await updataUserInfo()
+        if (!res.data.status) {
+          this.$message(res.data.message)
+        } else {
+          this.$message({
+            type: 'success',
+            message: res.data.message
+          })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
     uploadUserPic() {
       console.log('上传头像')
       this.dialogVisible = true
@@ -394,6 +416,9 @@ export default {
             border-radius: 10px;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .editBtn {
             position: absolute;
@@ -465,8 +490,15 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 20px;
-      background-color: rgba(255, 255, 255, 0.4);
+      .rightTop {
+        height: 200px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
