@@ -1,6 +1,7 @@
 build/*.js
 src/assets
 src/util/sakura.js
+src/util/weather.js
 src/assets/fonts1/
 src/assets/fonts/
 public
