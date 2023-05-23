@@ -15,12 +15,13 @@ export default {
   props: {
     clockWidth: {
       type: Number,
-      default: 200
+      default: 150
     },
     clockHeight: {
       type: Number,
-      default: 200
-    }
+      default: 150
+    },
+    showView: {}
   },
   data() {
     return {
@@ -37,6 +38,7 @@ export default {
   mounted() {
     this.obj = this.$refs.clock
     this.ctx = this.obj.getContext('2d')
+    this.draw()
     setInterval(this.draw, 1000)
   },
   methods: {

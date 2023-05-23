@@ -14,7 +14,39 @@
             <span style="font-size: 28px">{{ nowWeek }}</span>
           </div>
         </div>
-        <div class="box1"></div>
+        <div class="box1">
+          <div class="address">{{ weatherInfo.city }}</div>
+          <div class="weatherItem">
+            <span>
+              <img
+                :src="showSvg(weatherInfo.today.condition)"
+                :alt="weatherInfo.today.condition"
+                :title="weatherInfo.today.condition"
+              />
+            </span>
+            <span>今天:{{ showTemperature(weatherInfo.today.temp) }}</span>
+          </div>
+          <div class="weatherItem">
+            <span>
+              <img
+                :src="showSvg(weatherInfo.tomorrow.condition)"
+                :alt="weatherInfo.tomorrow.condition"
+                :title="weatherInfo.tomorrow.condition"
+              />
+            </span>
+            <span>明天:{{ showTemperature(weatherInfo.tomorrow.temp) }}</span>
+          </div>
+          <div class="weatherItem">
+            <span>
+              <img
+                :src="showSvg(weatherInfo.thirdday.condition)"
+                :alt="weatherInfo.thirdday.condition"
+                :title="weatherInfo.thirdday.condition"
+              />
+            </span>
+            <span>后天:{{ showTemperature(weatherInfo.thirdday.temp) }}</span>
+          </div>
+        </div>
       </div>
       <!-- 中间内容 -->
       <div class="centerContent">
@@ -25,23 +57,59 @@
           <div class="userRight">
             <span>123</span>
             <span style="font-size: 28px">{{ userInfo.userName }}</span>
-            <span calss="famousQuote">{{ userInfo.user_signature }}</span>
+            <span class="famousQuote">{{ userInfo.user_signature }}</span>
             <div class="editBtn" @click="updateUserInfo">
               <i class="el-icon-edit-outline"></i>
             </div>
           </div>
-          <div class="userBottom">
-            <span></span>
-            <span></span>
-          </div>
         </div>
         <div class="webiteFunction">
-          <div class="FunctionHeader">网站功能</div>
+          <div class="FunctionHeader">
+            <svg
+              style="margin: 0 5px"
+              t="1684826120023"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="2592"
+              width="30"
+              height="30"
+            >
+              <path
+                d="M224.6 185.9H415v295.8H224.6zM591.793 333.786l156.481-156.48 156.482 156.48-156.482 156.482zM224.6 603.7H415v295.8H224.6zM653 603.7h190.4v295.8H653z"
+                fill="#91B4FF"
+                p-id="2593"
+              ></path>
+              <path
+                d="M414.9 508H119.2c-14.6 0-26.3-11.8-26.3-26.3V185.9c0-14.5 11.8-26.3 26.3-26.3H415c14.6 0 26.3 11.8 26.3 26.3v295.8c0 14.5-11.8 26.3-26.4 26.3z m-269.4-52.7h243.1V212.2H145.5v243.1zM695.5 569.3c-7 0-13.7-2.8-18.6-7.7L467.7 352.4c-10.3-10.3-10.3-27 0-37.3L676.9 106c9.9-9.9 27.4-9.9 37.3 0l209.1 209.2c10.3 10.3 10.3 27 0 37.3L714.1 561.6c-4.9 4.9-11.6 7.7-18.6 7.7zM523.6 333.8l171.9 171.9 171.9-171.9-171.9-171.9-171.9 171.9zM414.9 925.8H119.2c-14.6 0-26.3-11.8-26.3-26.3v-36.9c0-14.5 11.8-26.3 26.3-26.3s26.3 11.8 26.3 26.3v10.6h243.1V630H145.5v41.5c0 14.5-11.8 26.3-26.3 26.3S92.8 686 92.8 671.5v-67.8c0-14.5 11.8-26.3 26.3-26.3h295.8c14.6 0 26.3 11.8 26.3 26.3v295.8c0.1 14.5-11.7 26.3-26.3 26.3z"
+                fill="#3778FF"
+                p-id="2594"
+              ></path>
+              <path
+                d="M119.2 808.4c-14.6 0-26.3-11.8-26.3-26.3v-30.5c0-14.5 11.8-26.3 26.3-26.3s26.3 11.8 26.3 26.3V782c0 14.6-11.8 26.4-26.3 26.4zM843.4 925.8H547.6c-14.6 0-26.3-11.8-26.3-26.3V603.7c0-14.5 11.8-26.3 26.3-26.3h295.8c14.6 0 26.3 11.8 26.3 26.3v295.8c0 14.5-11.8 26.3-26.3 26.3z m-269.5-52.7H817V630H573.9v243.1z"
+                fill="#3778FF"
+                p-id="2595"
+              ></path></svg
+            >网站功能
+            <div class="headerIcon">
+              <i class="el-icon-arrow-down"></i>
+            </div>
+          </div>
           <div class="FunctionContent">
-            <span>图片鉴赏</span>
-            <span>文章发布</span>
-            <span>网站收藏</span>
-            <span>作品发布</span>
+            <span
+              ><img src="@/assets/viewIcon/tupian.svg" alt="" />图片鉴赏</span
+            >
+            <span
+              ><img
+                src="@/assets/viewIcon/fabuwenzhang.svg"
+                alt=""
+              />文章发布</span
+            >
+            <span
+              ><img src="@/assets/viewIcon/wangye.svg" alt="" />网站收藏</span
+            >
+            <span><img src="@/assets/viewIcon/zp.svg" alt="" />作品发布</span>
           </div>
         </div>
       </div>
@@ -50,10 +118,10 @@
         <div class="rightTop"></div>
       </div>
     </div>
-    <!-- <el-dialog
-      title="修改头像"
+    <el-dialog
+      title="个人资料"
       :visible.sync="dialogVisible"
-      width="400px"
+      width="250"
       :before-close="handleClose"
     >
       <div class="loadBox">
@@ -70,59 +138,15 @@
         </el-upload>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="info" @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="uploadBtn">确 定</el-button>
       </span>
     </el-dialog>
-
-    <div class="userContainer">
-      <div class="introduction">
-        <div class="left">
-          <div class="personal">
-            <div class="HeadPortrait" @click="uploadUserPic">
-              <img :src="userInfo.user_pic" alt="" />
-            </div>
-            <span>{{ userInfo.userName }}</span>
-            <span>{{ userInfo.user_signature }}</span>
-          </div>
-          <div
-            v-for="(item, index) in labelList"
-            :key="item.id"
-            :class="
-              newIndex === index ? 'labelItem labelItemStyle' : 'labelItem'
-            "
-            @click="taggerCarousel(index)"
-          >
-            <i
-              :class="item.icon"
-              :style="'margin-right: 10px; color:' + item.color"
-            ></i
-            >{{ item.text }}
-          </div>
-        </div>
-
-        <div class="right">
-          <el-carousel
-            :interval="3000"
-            :autoplay="false"
-            arrow="always"
-            :initial-index="newIndex"
-            direction="vertical"
-            indicator-position="none"
-            style="width: 100%; height: 100%"
-            @change="taggerCarousel"
-          >
-            <el-carousel-item v-for="item in 6" :key="item">
-              <div class="content"></div>
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
+import weatherObj from '@/util/weather.js'
 import ClockTemp from '@/components/clock/index.vue'
 import {
   getUserInfo,
@@ -130,7 +154,8 @@ import {
   getTableInfo,
   upDataSignature,
   updataUserPic,
-  updataUserInfo
+  updataUserInfo,
+  getWeather
 } from '@/api/userInfoApi'
 export default {
   name: 'userAbout',
@@ -146,24 +171,50 @@ export default {
       newIndex: 0,
       srcList: [],
       labelList: [],
-      dialogVisible: false,
+      dialogVisible: true,
       worksList: [],
       nowDate: '', // 当前日期
       nowTime: '', // 当前时间
-      nowWeek: '' // 当前星期
+      nowWeek: '', // 当前星期
+      weatherInfo: {}
     }
   },
   computed: {
-    // eslint-disable-next-line vue/no-unused-components
     tokenInfo() {
       return {
         authorization: sessionStorage.getItem('webiteToken')
+      }
+    },
+    showSvg() {
+      return function(val) {
+        console.log(val)
+        if (weatherObj[val]) {
+          return weatherObj[val]
+        }
+        for (const item in weatherObj) {
+          if (val.indexOf(item) !== -1) {
+            return weatherObj[item]
+          }
+        }
+        return weatherObj['无']
+      }
+    },
+    // 格式化温度
+    showTemperature() {
+      return function(str) {
+        const list = str.split('~')
+        if (list.length === 1) {
+          return list[0]
+        } else {
+          return `${list[0]}°C/${list[1]}°C `
+        }
       }
     }
   },
   methods: {
     // 点击修改用户按钮
     updateUserInfo() {
+      this.dialogVisible = true
       console.log('修改用户信息按钮')
     },
     async saveUserInfo() {
@@ -185,7 +236,9 @@ export default {
       console.log('上传头像')
       this.dialogVisible = true
     },
-    handleClose() {},
+    handleClose() {
+      this.dialogVisible = false
+    },
     async uploadBtn() {
       console.log(this.localUser.userId, this.imageUrl)
       if (this.imageUrl === '') return this.$message('上传的头像不能为空')
@@ -297,6 +350,18 @@ export default {
       }
       _this.nowTime = hh + ':' + mf + ':' + second
       _this.nowDate = yy + '年' + mm + '月' + dd + '日'
+    },
+    // getWeather
+    async newWeather() {
+      try {
+        const res = await getWeather()
+        if (res.data.status) {
+          console.log(res.data.data)
+          this.weatherInfo = res.data.data
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   created() {
@@ -305,8 +370,10 @@ export default {
       this.$router.push('/login')
     }
     this.localUser = user
+    this.getDate()
     this.currentTime()
     this.getUser(user.userId, user.accountNumber)
+    this.newWeather()
   },
   beforeDestroy() {
     if (this.getDate) {
@@ -325,6 +392,7 @@ export default {
   padding-top: 20px;
   background: url(http://127.0.0.1/images/viewsImg/1681725536144.jpg);
   background-size: 100% 100%;
+  // background-color: black;
   .headerTextContent {
     display: flex;
     align-items: center;
@@ -366,9 +434,10 @@ export default {
     margin: auto;
     .clockContent {
       padding: 20px 10px;
-      height: 420px;
+      height: 400px;
       width: 470px;
       flex: 0.33;
+      box-shadow: 0 0 10px rgba(4,4,4,0.4);
       border-radius: 20px;
       background-color: rgba(255, 255, 255, 0.4);
     }
@@ -382,14 +451,16 @@ export default {
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
-        height: 250px;
-        padding: 20px 30px;
+        height: 170px;
+        padding: 20px 30px 20px;
         border-radius: 20px;
         margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(4,4,4,0.4);
         background-color: rgba(255, 255, 255, 0.4);
         .userLeft {
-          height: 150px;
-          width: 150px;
+          box-shadow: 0 0 10px rgba(4,4,4,0.4);
+          height: 120px;
+          width: 120px;
           margin-right: 10px;
           > img {
             width: 100%;
@@ -403,17 +474,19 @@ export default {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          height: 130px;
+          height: 120px;
           padding: 10px 0;
-          border: 1px solid #ccc;
-          margin-bottom: 20px;
           > span {
             color: #fff;
           }
           .famousQuote {
+            box-sizing: border-box;
+            font-size: 16px;
+            // padding-left: 10px;
             height: 30px;
+            width: 100%;
             line-height: 30px;
-            border-radius: 10px;
+            border-radius: 5px;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.4);
             white-space: nowrap;
@@ -433,54 +506,64 @@ export default {
             cursor: pointer;
           }
         }
-        .userBottom {
-          height: 50px;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 10px;
-          background-color: rgba(255, 255, 255, 0.4);
-          > span {
-            height: 30px;
-            border-radius: 10px;
-            width: 100px;
-            margin: 0 20px;
-            background-color: #409eff;
-            z-index: -1;
-          }
-        }
       }
       .webiteFunction {
         height: 230px;
         width: 100%;
         padding: 20px;
         border-radius: 20px;
+        box-shadow: 0 0 10px rgba(4,4,4,0.4);
         background-color: rgba(255, 255, 255, 0.4);
         .FunctionHeader {
-          height: 45px;
-          line-height: 45px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          height: 40px;
           font-size: 24px;
           color: #fff;
           width: 100%;
-          margin-bottom: 10px;
           border-bottom: 1px solid #fff;
+          > .headerIcon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: #fff;
+            right: 10px;
+          }
         }
         .FunctionContent {
           height: 150px;
           width: 100%;
           display: flex;
           flex-wrap: wrap;
-          padding: 20px;
+          padding: 20px 0 0;
           justify-content: space-between;
           align-items: center;
           > span {
             display: flex;
+            align-items: center;
+            justify-content: center;
             width: 40%;
             height: 50px;
-            margin: 0 20px;
-            border-radius: 10px;
+            font-size: 20px;
+            line-height: 50px;
+            margin: 0 15px;
+            border-radius: 5px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(3, 3, 3, 0.2);
             background-color: rgba(255, 255, 255, 0.4);
+            transition: all 0.7s;
+            cursor: pointer;
+            &:hover {
+              color: #7290b0;
+              background-color: #fff;
+            }
+            > img {
+              height: 28px;
+              width: 28px;
+              margin: 0 10px;
+            }
           }
         }
       }
@@ -498,6 +581,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        box-shadow: 0 0 10px rgba(4,4,4,0.4);
       }
     }
   }
@@ -628,10 +712,10 @@ export default {
 }
 // 弹窗样式
 .loadBox {
-  // background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #ccc;
 }
 .dialog-footer {
   display: flex;
@@ -641,7 +725,7 @@ export default {
 // ----------------------
 .box {
   position: relative;
-  height: 250px;
+  height: 200px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -649,14 +733,46 @@ export default {
   border-radius: 20px;
   z-index: 10;
   margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(4,4,4,0.4);
   background-color: rgba(255, 255, 255, 0.5);
 }
 .box1 {
+  position: relative;
   display: flex;
   align-items: center;
-  height: 110px;
+  height: 150px;
   border-radius: 20px;
+  box-shadow: 0 0 10px rgba(4,4,4,0.4);
   background-color: rgba(255, 255, 255, 0.5);
+  > .weatherItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0 10px;
+    > span {
+      color: #fff;
+      > img {
+        height: 60px;
+        width: 60px;
+      }
+    }
+  }
+  .address {
+    position: absolute;
+    height: 30px;
+    width: 200px;
+    top: 5px;
+    left: 5px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #fff;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 .rightBox {
   display: flex;
