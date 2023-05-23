@@ -100,3 +100,11 @@ export const updataUserInfo = function(userName, userId, userPic, userSignature)
     }
   })
 }
+
+// 获取近期天气
+export const getWeather = function() {
+  return axios({
+    method: 'GET',
+    url: '/api/getWeather'
+  })
+}
