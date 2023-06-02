@@ -67,7 +67,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const userInfo = localStorage.getItem('myWebiteUser')
-  if (to.name !== 'login' && !userInfo) next({ name: 'login' })
+  const userToken = localStorage.getItem('webiteToken')
+  if (to.name !== 'login' && !userInfo && !userToken) next({ name: 'login' })
   else next()
 })
 

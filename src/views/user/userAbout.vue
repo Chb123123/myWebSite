@@ -182,12 +182,11 @@ export default {
   computed: {
     tokenInfo() {
       return {
-        authorization: sessionStorage.getItem('webiteToken')
+        authorization: localStorage.getItem('webiteToken')
       }
     },
     showSvg() {
       return function(val) {
-        console.log(val)
         if (weatherObj[val]) {
           return weatherObj[val]
         }
@@ -254,9 +253,8 @@ export default {
       })
     },
     handleAvatarSuccess(file) {
-      if (file.status) {
+      if (file.status === 1) {
         this.imageUrl = file.queryData
-        console.log(file.queryData)
         this.$message('上传头像成功')
       }
     },
@@ -356,7 +354,6 @@ export default {
       try {
         const res = await getWeather()
         if (res.data.status) {
-          console.log(res.data.data)
           this.weatherInfo = res.data.data
         }
       } catch (error) {
@@ -458,6 +455,8 @@ export default {
         box-shadow: 0 0 10px rgba(4,4,4,0.4);
         background-color: rgba(255, 255, 255, 0.4);
         .userLeft {
+          border-radius: 10px;
+          overflow: hidden;
           box-shadow: 0 0 10px rgba(4,4,4,0.4);
           height: 120px;
           width: 120px;
@@ -465,7 +464,6 @@ export default {
           > img {
             width: 100%;
             height: 100%;
-            border-radius: 10px;
           }
         }
         .userRight {
