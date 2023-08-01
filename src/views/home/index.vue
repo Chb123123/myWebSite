@@ -6,7 +6,7 @@
         <div class="headerNav">
           <ul>
             <li>
-              <span>退出登入</span>
+              <span @click="outLogin">退出登入</span>
             </li>
           </ul>
         </div>
@@ -124,25 +124,25 @@ export default {
     },
     gotoView(id) {
       this.navIndex = id
+      console.log(this.navIndex)
       switch (id) {
-        case 0:
-          this.$router.push('/home')
-          break
         case 1:
+          // 图片鉴赏
           this.$router.push('/imageList')
           break
         case 2:
           this.$router.push('/user')
           break
         case 3:
-          console.log('网页设置')
-          break
-        case 5:
-          // 删除本地token
-          localStorage.removeItem('myWebiteUser')
-          this.$router.replace('/login')
+          // 文章发布
+          this.$router.push('/article')
           break
       }
+    },
+    // 退出登入
+    outLogin() {
+      localStorage.removeItem('myWebiteUser')
+      this.$router.replace('/login')
     },
     // 获取轮播图列表
     async getFouseMap(id) {

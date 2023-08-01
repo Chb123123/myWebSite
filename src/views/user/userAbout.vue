@@ -171,7 +171,7 @@ export default {
       newIndex: 0,
       srcList: [],
       labelList: [],
-      dialogVisible: true,
+      dialogVisible: false,
       worksList: [],
       nowDate: '', // 当前日期
       nowTime: '', // 当前时间
