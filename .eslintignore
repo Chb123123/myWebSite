@@ -4,6 +4,7 @@ src/util/sakura.js
 src/util/weather.js
 src/assets/fonts1/
 src/assets/fonts/
+src/views/home/index.vue
 public
 dist
 node_modules

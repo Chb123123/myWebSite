@@ -1,28 +1,27 @@
 <template>
   <div class="mainBox">
-    <el-dialog
-      title="查看"
+    <!-- <el-dialog
+      :title="imgInfo.title"
       :visible.sync="dialogVisible"
-      width="30%"
+      width="900px"
       :before-close="handleClose"
     >
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
-    </el-dialog>
-    <div :class="className">
+      <div :style="'height:'+imgInfo._height +'px'">
+        <img :src="imgInfo.url" :alt="imgInfo.title" style="width: 100%; height: 100%;">
+      </div>
+    </el-dialog> -->
+    <!-- 大图预览 -->
+    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="srcList" :zIndex="9999"/>
+    <div class="headerTitle">
       <span
-        class="titleItem"
+        :class="imgType === item.type?'titleItem checkTitle':'titleItem'"
         v-for="item in titleList"
         :key="item.id"
         @click="getTitle(item.type)"
         >{{ item.title }}</span
       >
     </div>
+    <!-- 瀑布流组件 -->
     <vueWaterfallEasy
       ref="waterfall"
       :imgsArr="imgList"
@@ -46,11 +45,13 @@ export default {
       loading: true,
       dialogVisible: false,
       imgList: [],
+      srcList: [],
       total: 0,
       page: 0,
       show3: true,
+      showViewer: false,
       imgType: '',
-      className: 'headerTitle',
+      imgInfo: '',
       titleList: [
         {
           id: 0,
@@ -102,6 +103,7 @@ export default {
     this.getInfoData()
   },
   methods: {
+    // 获取图片列表
     async getInfoData() {
       this.loading = true
       this.page++
@@ -113,43 +115,40 @@ export default {
           })
           this.total = res.data.queryData.total
           this.imgList = [...this.imgList, ...res.data.queryData.results]
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.data.message
-          })
         }
       } catch (err) {
         console.log(err)
       }
     },
-    handleScroll() {
-      const scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop
-      if (scrollTop < 1000) {
-        this.className = 'headerTitle two'
-      } else {
-        this.className = 'headerTitle one'
-      }
+    // 关闭图片预览
+    closeViewer() {
+      this.showViewer = false
     },
+    // 切换图片标签
     getTitle(type) {
-      console.log(type)
       this.imgType = type
       this.imgList = []
       this.getInfoData()
     },
+    // 获取图片详情
     getImgAbout(index, obj) {
-      console.log(obj._height)
-      this.dialogVisible = true
+      this.imgInfo = obj.value
+      if (this.imgInfo.url) {
+        this.srcList.push(this.imgInfo.url)
+      } else {
+        this.srcList = []
+      }
+      this.$nextTick(() => {
+        // 显示大图
+        this.showViewer = true
+      })
+      const imgHeight = obj.value._height * 3
+      this.imgInfo._height = imgHeight
+      // this.dialogVisible = true
     },
     handleClose() {
       this.dialogVisible = false
     }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll) // 监听页面滚动
   }
 }
 </script>
@@ -161,9 +160,12 @@ export default {
   height: 100vh;
   background-color: #000;
   .headerTitle {
-    position: fixed;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    position: sticky; // 粘性定位 当导航栏top为0时固定在顶部
     top: 0;
-    left: 0;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -183,22 +185,17 @@ export default {
         color: #3640c0;
       }
     }
+    .checkTitle {
+      color: #3640c0;
+    }
   }
 }
-.one {
-  animation: move 1s forwards;
+/deep/.el-dialog__body {
+  padding: 0;
 }
-.two {
-  animation: movey 1s forwards;
-}
-@keyframes move {
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes movey {
-  100% {
-    opacity: 1;
-  }
+// 图片容器
+.imgContent {
+  width: 100%;
+  border: 1px solid #ccc;
 }
 </style>

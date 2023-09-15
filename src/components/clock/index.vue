@@ -92,8 +92,8 @@ export default {
       this.ctx.save()
       this.ctx.beginPath()
       this.ctx.strokeStyle = '#FBEA93'
-      var rad = ((2 * Math.PI) / 12) * hour
-      var mrad = ((2 * Math.PI) / 12 / 60) * minute
+      const rad = ((2 * Math.PI) / 12) * hour
+      const mrad = ((2 * Math.PI) / 12 / 60) * minute
       this.ctx.rotate(rad + mrad)
       this.ctx.lineWidth = 6
       this.ctx.lineCap = 'round'
@@ -107,7 +107,7 @@ export default {
       this.ctx.save()
       this.ctx.beginPath()
       this.ctx.strokeStyle = '#448EBB'
-      var rad = ((2 * Math.PI) / 60) * minute
+      const rad = ((2 * Math.PI) / 60) * minute
       this.ctx.rotate(rad)
       this.ctx.lineWidth = 3 * this.rem
       this.ctx.lineCap = 'round'
@@ -121,7 +121,7 @@ export default {
       this.ctx.save()
       this.ctx.beginPath()
       this.ctx.fillStyle = '#fff'
-      var rad = ((2 * Math.PI) / 60) * second
+      const rad = ((2 * Math.PI) / 60) * second
       this.ctx.rotate(rad)
       this.ctx.moveTo(-2, 20 * this.rem)
       this.ctx.lineTo(2, 20 * this.rem)
@@ -140,10 +140,10 @@ export default {
     // 开始执行
     draw() {
       this.ctx.clearRect(0, 0, this.clockWidth, this.clockHeight)
-      var now = new Date()
-      var hour = now.getHours()
-      var minutes = now.getMinutes()
-      var seconds = now.getSeconds()
+      const now = new Date()
+      const hour = now.getHours()
+      const minutes = now.getMinutes()
+      const seconds = now.getSeconds()
       this.drawBackground()
       this.drawHour(hour, minutes)
       this.drawMinute(minutes)

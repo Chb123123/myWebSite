@@ -55,7 +55,7 @@
             <img :src="userInfo.user_pic" alt="" />
           </div>
           <div class="userRight">
-            <span>123</span>
+            <span>内容区</span>
             <span style="font-size: 28px">{{ userInfo.userName }}</span>
             <span class="famousQuote">{{ userInfo.user_signature }}</span>
             <div class="editBtn" @click="updateUserInfo">
@@ -317,7 +317,7 @@ export default {
       setInterval(this.getDate, 1000)
     },
     getDate() {
-      var _this = this
+      const _this = this
       const yy = new Date().getFullYear()
       const mm = new Date().getMonth() + 1
       const dd = new Date().getDate()
@@ -389,7 +389,6 @@ export default {
   padding-top: 20px;
   background: url(http://127.0.0.1/images/viewsImg/1681725536144.jpg);
   background-size: 100% 100%;
-  // background-color: black;
   .headerTextContent {
     display: flex;
     align-items: center;

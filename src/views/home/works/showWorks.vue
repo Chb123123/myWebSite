@@ -1,12 +1,5 @@
 <template>
   <div class="main_container">
-    <!-- <el-row :gutter="20">
-      <el-col :span="12" v-for="item in worksList" :key="item.id">
-        <div class="worksItem" @click="getWorkInfo(item)">
-          <div class="worksTitle">{{ item.worksTitle }}</div>
-        </div>
-      </el-col>
-    </el-row> -->
     <div class="content">
       <div class="box">
         <ClockTemp></ClockTemp>
@@ -80,7 +73,7 @@ export default {
       setInterval(this.getDate, 1000)
     },
     getDate() {
-      var _this = this
+      const _this = this
       const yy = new Date().getFullYear()
       const mm = new Date().getMonth() + 1
       const dd = new Date().getDate()
