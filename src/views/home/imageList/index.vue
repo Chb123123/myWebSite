@@ -97,7 +97,8 @@ export default {
     }
   },
   components: {
-    vueWaterfallEasy
+    vueWaterfallEasy,
+    'el-image-viewer': () => import('element-ui/packages/image/src/image-viewer')
   },
   created() {
     this.getInfoData()
@@ -134,7 +135,7 @@ export default {
     getImgAbout(index, obj) {
       this.imgInfo = obj.value
       if (this.imgInfo.url) {
-        this.srcList.push(this.imgInfo.url)
+        this.srcList = [this.imgInfo.url]
       } else {
         this.srcList = []
       }
@@ -158,13 +159,13 @@ export default {
   width: 100vw;
   padding: 70px 0 0;
   height: 100vh;
-  background-color: #000;
+  background-color: transparent;
   .headerTitle {
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    position: sticky; // 粘性定位 当导航栏top为0时固定在顶部
+    position: fixed;
     top: 0;
+    left: 0;
+    // position: sticky; // 粘性定位 当导航栏top为0时固定在顶部
+    // top: 0;
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -172,9 +173,9 @@ export default {
     height: 70px;
     width: 100%;
     font-size: 26px;
-    background-color: #000;
-    z-index: 999999;
-    color: #fff;
+    background-color: transparent;
+    z-index: 9;
+    color: #333;
     box-sizing: 0 0 10px rgba(255, 255, 255, 0.7);
     .titleItem {
       width: 120px;
