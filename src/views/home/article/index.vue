@@ -57,8 +57,13 @@ export default {
         height: '80vh', // 高度
         placeholder: '在这里输入内容',
         branding: false, // 隐藏右下角技术支持
-        images_upload_url: 'http://127.0.0.1/api/uploadImg'
+        images_upload_url: `${this.$baseUrl}/my/upload/img`
       }
+    }
+  },
+  tokenInfo() {
+    return {
+      authorization: localStorage.getItem('webiteToken')
     }
   },
   methods: {
@@ -70,7 +75,6 @@ export default {
           this.myValue,
           this.title
         )
-        console.log(res.data)
         if (res.data.status === 1) {
           this.$message({
             type: 'success',

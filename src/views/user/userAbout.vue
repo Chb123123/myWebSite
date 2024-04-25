@@ -18,33 +18,33 @@
           <div class="address">{{ weatherInfo.city }}</div>
           <div class="weatherItem">
             <span>
-              <img
+              <!-- <img
                 :src="showSvg(weatherInfo.today.condition)"
                 :alt="weatherInfo.today.condition"
                 :title="weatherInfo.today.condition"
-              />
+              /> -->
             </span>
-            <span>今天:{{ showTemperature(weatherInfo.today.temp) }}</span>
+            <!-- <span>今天:{{ showTemperature(weatherInfo.today.temp) }}</span> -->
           </div>
           <div class="weatherItem">
             <span>
-              <img
+              <!-- <img
                 :src="showSvg(weatherInfo.tomorrow.condition)"
                 :alt="weatherInfo.tomorrow.condition"
                 :title="weatherInfo.tomorrow.condition"
-              />
+              /> -->
             </span>
-            <span>明天:{{ showTemperature(weatherInfo.tomorrow.temp) }}</span>
+            <!-- <span>明天:{{ showTemperature(weatherInfo.tomorrow.temp) }}</span> -->
           </div>
           <div class="weatherItem">
             <span>
-              <img
+              <!-- <img
                 :src="showSvg(weatherInfo.thirdday.condition)"
                 :alt="weatherInfo.thirdday.condition"
                 :title="weatherInfo.thirdday.condition"
-              />
+              /> -->
             </span>
-            <span>后天:{{ showTemperature(weatherInfo.thirdday.temp) }}</span>
+            <!-- <span>后天:{{ showTemperature(weatherInfo.thirdday.temp) }}</span> -->
           </div>
         </div>
       </div>
@@ -65,33 +65,10 @@
         </div>
         <div class="webiteFunction">
           <div class="FunctionHeader">
-            <svg
-              style="margin: 0 5px"
-              t="1684826120023"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="2592"
-              width="30"
-              height="30"
-            >
-              <path
-                d="M224.6 185.9H415v295.8H224.6zM591.793 333.786l156.481-156.48 156.482 156.48-156.482 156.482zM224.6 603.7H415v295.8H224.6zM653 603.7h190.4v295.8H653z"
-                fill="#91B4FF"
-                p-id="2593"
-              ></path>
-              <path
-                d="M414.9 508H119.2c-14.6 0-26.3-11.8-26.3-26.3V185.9c0-14.5 11.8-26.3 26.3-26.3H415c14.6 0 26.3 11.8 26.3 26.3v295.8c0 14.5-11.8 26.3-26.4 26.3z m-269.4-52.7h243.1V212.2H145.5v243.1zM695.5 569.3c-7 0-13.7-2.8-18.6-7.7L467.7 352.4c-10.3-10.3-10.3-27 0-37.3L676.9 106c9.9-9.9 27.4-9.9 37.3 0l209.1 209.2c10.3 10.3 10.3 27 0 37.3L714.1 561.6c-4.9 4.9-11.6 7.7-18.6 7.7zM523.6 333.8l171.9 171.9 171.9-171.9-171.9-171.9-171.9 171.9zM414.9 925.8H119.2c-14.6 0-26.3-11.8-26.3-26.3v-36.9c0-14.5 11.8-26.3 26.3-26.3s26.3 11.8 26.3 26.3v10.6h243.1V630H145.5v41.5c0 14.5-11.8 26.3-26.3 26.3S92.8 686 92.8 671.5v-67.8c0-14.5 11.8-26.3 26.3-26.3h295.8c14.6 0 26.3 11.8 26.3 26.3v295.8c0.1 14.5-11.7 26.3-26.3 26.3z"
-                fill="#3778FF"
-                p-id="2594"
-              ></path>
-              <path
-                d="M119.2 808.4c-14.6 0-26.3-11.8-26.3-26.3v-30.5c0-14.5 11.8-26.3 26.3-26.3s26.3 11.8 26.3 26.3V782c0 14.6-11.8 26.4-26.3 26.4zM843.4 925.8H547.6c-14.6 0-26.3-11.8-26.3-26.3V603.7c0-14.5 11.8-26.3 26.3-26.3h295.8c14.6 0 26.3 11.8 26.3 26.3v295.8c0 14.5-11.8 26.3-26.3 26.3z m-269.5-52.7H817V630H573.9v243.1z"
-                fill="#3778FF"
-                p-id="2595"
-              ></path></svg
-            >网站功能
+            <img src="@/assets/userIcon/util.svg" alt="" style="width: 30px; height: 30px;margin-right: 5px;">
+            <span>
+              网站功能
+            </span>
             <div class="headerIcon">
               <i class="el-icon-arrow-down"></i>
             </div>
@@ -154,8 +131,7 @@ import {
   getTableInfo,
   upDataSignature,
   updataUserPic,
-  updataUserInfo,
-  getWeather
+  updataUserInfo
 } from '@/api/userInfoApi'
 export default {
   name: 'userAbout',
@@ -348,18 +324,18 @@ export default {
       }
       _this.nowTime = hh + ':' + mf + ':' + second
       _this.nowDate = yy + '年' + mm + '月' + dd + '日'
-    },
-    // getWeather
-    async newWeather() {
-      try {
-        const res = await getWeather()
-        if (res.data.status) {
-          this.weatherInfo = res.data.data
-        }
-      } catch (error) {
-        console.log(error)
-      }
     }
+    // getWeather
+    // async newWeather() {
+    //   try {
+    //     const res = await getWeather()
+    //     if (res.data.status) {
+    //       this.weatherInfo = res.data.data
+    //     }
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }
   },
   created() {
     const user = JSON.parse(localStorage.getItem('myWebiteUser'))
@@ -370,7 +346,7 @@ export default {
     this.getDate()
     this.currentTime()
     this.getUser(user.userId, user.accountNumber)
-    this.newWeather()
+    // this.newWeather()
   },
   beforeDestroy() {
     if (this.getDate) {
@@ -414,7 +390,7 @@ export default {
         rgba(0, 0, 255, 0.8) 50%,
         rgb(128, 0, 128) 80%
       );
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
       font-size: 64px;
       text-align: center;
