@@ -1,10 +1,16 @@
 <template>
   <div class="container">
     <el-collapse-transition>
-      <div class="headerTable" v-show="showHeader">
+      <div class="headerTable">
         <!-- <div class="webiteTitle">个 人 网 站</div> -->
         <div class="headerNav">
           <ul>
+            <li>
+              <SelectBtn
+                @changeTheme="changeThemeBtn"
+                :themeFlag="themeFlag"
+              ></SelectBtn>
+            </li>
             <li>
               <span @click="outLogin">退出登入</span>
             </li>
@@ -70,19 +76,23 @@
 <script>
 import { getFouseMapList } from '@/api/homeViewApi'
 import { getUserInfo } from '@/api/userInfoApi'
+import SelectBtn from '@/components/selectStyleBtn.vue'
 export default {
   name: 'myHome',
+  components: {
+    SelectBtn
+  },
   data() {
     return {
       userInfo: {},
       labelList: [], // table列表
+      themeFlag: true,
       navIndex: 0,
       // 当前焦点图索引
       newIndex: 0,
       srcList: [],
       // 焦点图列表
       fouceMap: [],
-      showHeader: true,
       scrollHeight: 0,
       scrollFalg: true,
       canvasDom: null,
@@ -144,6 +154,21 @@ export default {
       localStorage.removeItem('myWebiteUser')
       this.$router.replace('/login')
     },
+    // 切换主题
+    changeThemeBtn(value) {
+      this.themeFlag = value
+      this.saveTheme()
+    },
+    saveTheme() {
+      this.$nextTick(() => {
+        if (this.themeFlag) {
+          document.documentElement.setAttribute('data-theme', 'theme')
+        } else {
+          document.documentElement.setAttribute('data-theme', 'theme1')
+        }
+        localStorage.setItem('themeFlag', this.themeFlag)
+      })
+    },
     // 获取轮播图列表
     async getFouseMap(id) {
       const res = await getFouseMapList(id)
@@ -170,21 +195,38 @@ export default {
       this.canvasDom.style.display = 'none'
     }
     window.addEventListener('scroll', this.handleScroll) // 监听页面滚动
+    // 初始化页面样式
+    this.$nextTick(() => {
+      let flag = localStorage.getItem('themeFlag')
+      if (flag === 'false') {
+        this.themeFlag = false
+      } else {
+        this.themeFlag = true
+      }
+      if (this.themeFlag) {
+        document.documentElement.setAttribute('data-theme', 'theme')
+      } else {
+        document.documentElement.setAttribute('data-theme', 'theme1')
+      }
+    })
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .container {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #06070c;
+  // background-color: #06070c;
+  @include bg_color();
+  @include font_color();
   // background-image: url('@/assets/233711-1680190631eeea.jpg');
   background-size: 100% 100%;
   overflow: auto;
   .headerTable {
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky; /*兼容*/
     top: 0;
     left: 0;
     display: flex;
@@ -200,7 +242,8 @@ export default {
       height: 70px;
       line-height: 70px;
       font-size: 30px;
-      color: white;
+      // color: white;
+      @include font_color();
       font-weight: 600;
       text-shadow: 0 0 5px;
     }
@@ -224,7 +267,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: end;
-          color: #fff;
+          @include font_color();
           font-size: 18px;
           cursor: pointer;
           // background-color: red;
@@ -234,6 +277,7 @@ export default {
           }
           .fontStyle {
             background-color: #fff;
+            @include bg_color();
             padding: 5px 20px;
             border-radius: 20px;
             color: #333;
@@ -252,7 +296,9 @@ export default {
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      border: 3px solid #fff;
+      // border: 3px solid #fff;
+      @include border_color();
+      border-width: 3px;
       > .userPicImg {
         // width: 100%;
         // height: 100%;

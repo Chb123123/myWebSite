@@ -39,3 +39,14 @@ export const getUserArticleList = function(page, size) {
     params: data
   })
 }
+
+// 用户发布文章
+export const uploadImg = function(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return axios({
+    method: 'post',
+    url: '/my/upload/img',
+    data: formData
+  })
+}

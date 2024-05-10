@@ -1,12 +1,14 @@
 <template>
   <div class="mainContainer">
-    <div class="title">{{ title }}</div>
+    <div class="title">
+      <el-input v-model="title" placeholder="请输入文章标题"></el-input>
+    </div>
     <Editor id="tinymce" v-model="myValue" :init="init"></Editor>
     <div class="submitBox">
-      <el-button type="primary" style="margin: 0 20px" @click="releaseArticle"
+      <el-button size="small" type="primary" style="margin: 0 20px" @click="releaseArticle"
         >发布文章</el-button
       >
-      <el-button type="info" style="margin: 0 20px" @click="cancelRelease"
+      <el-button size="small" type="info" style="margin: 0 20px" @click="cancelRelease"
         >取消编辑</el-button
       >
     </div>
@@ -40,7 +42,7 @@ export default {
     return {
       myValue: '',
       userInfo: {},
-      title: '标题',
+      title: '',
       init: {
         selector: '#tinymce',
         language_url: '/static/zh_CN.js', // 汉化路径是自定义的，一般放在public或static里面
@@ -55,9 +57,15 @@ export default {
         fontsize_formats:
           '12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px 56px 72px', // 字体大小
         height: '80vh', // 高度
-        placeholder: '在这里输入内容',
+        min_height: '400px',
+        placeholder: '文章内容',
         branding: false, // 隐藏右下角技术支持
         images_upload_url: `${this.$baseUrl}/my/upload/img`
+        // images_upload_handler: async(blobInfo, successFun) => {
+        //   const file = blobInfo.blob()
+        //   const { data } = await uploadImg(file)
+        //   successFun(data.data)
+        // }
       }
     }
   },
@@ -118,11 +126,12 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .mainContainer {
   width: 100%;
   height: 100vh;
   border: 1px solid #ccc;
+  padding: 20px;
 }
 .title {
   height: 50px;
@@ -130,6 +139,10 @@ export default {
   width: 100%;
   text-align: center;
   line-height: 50px;
+  margin-bottom: 20px;
+  /deep/.el-input__inner {
+    text-align: center;
+  }
 }
 .submitBox {
   height: 50px;
