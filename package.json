@@ -17,6 +17,7 @@
     "element-ui": "^2.15.10",
     "node-sass": "^9.0.0",
     "sass-loader": "^14.2.1",
+    "svg-sprite-loader": "^6.0.11",
     "tinymce": "^6.4.1",
     "vant": "^3.6.4",
     "vue": "^2.6.14",

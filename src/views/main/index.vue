@@ -24,14 +24,14 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .mainBox {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/002105-1666196465196d.jpg');
+  // background-image: url('@/assets/002105-1666196465196d.jpg');
   background-size: 100% 100%;
   .mainTitle {
     display: flex;

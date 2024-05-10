@@ -368,7 +368,7 @@ export default {
   .headerTextContent {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 30px;
     height: 120px;
     line-height: 120px;

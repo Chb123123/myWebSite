@@ -242,7 +242,6 @@ export default {
       height: 70px;
       line-height: 70px;
       font-size: 30px;
-      // color: white;
       @include font_color();
       font-weight: 600;
       text-shadow: 0 0 5px;
@@ -252,25 +251,22 @@ export default {
       height: 70px;
       display: flex;
       align-items: center;
-      justify-content: end;
-      // margin-right: 150px;
-      // background-color: red;
+      justify-content: flex-end;
       > ul {
         width: 800px;
         height: 70px;
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         > li {
           flex: 1;
           height: 70px;
           display: flex;
           align-items: center;
-          justify-content: end;
+          justify-content: flex-end;
           @include font_color();
           font-size: 18px;
           cursor: pointer;
-          // background-color: red;
           &:hover {
             color: #5e8fd4;
             transition: all 0.4s;
@@ -417,7 +413,6 @@ export default {
     align-items: center;
     height: 120px;
     margin: 40px auto 30px;
-    // border: 1px solid #ccc;
     width: 80vw;
     > .moduleItem {
       flex: 0.2;
