@@ -65,11 +65,11 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const userInfo = localStorage.getItem('myWebiteUser')
-//   const userToken = localStorage.getItem('webiteToken')
-//   if (to.name !== 'login' && !userInfo && !userToken) next({ name: 'login' })
-//   else next()
-// })
+router.beforeEach((to, from, next) => {
+  const userInfo = localStorage.getItem('myWebiteUser')
+  const userToken = localStorage.getItem('webiteToken')
+  if (to.name !== 'login' && !userInfo && !userToken) next({ name: 'login' })
+  else next()
+})
 
 export default router

@@ -356,7 +356,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .mainContainer {
   height: 100vh;
   width: 100%;
@@ -373,7 +373,6 @@ export default {
     height: 120px;
     line-height: 120px;
     width: 700px;
-    // border: 1px solid #ccc;
     border-left: 0;
     margin-bottom: 40px;
     border-radius: 0 60px 60px 0;

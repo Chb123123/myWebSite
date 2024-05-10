@@ -126,7 +126,6 @@ export default {
       const res = await getUserInfo(userId, accountNumber)
       if (res.data.status === 1) {
         this.userInfo = res.data.queryData
-        console.log(this.userInfo)
         this.srcList.push(this.userInfo.user_pic)
       } else {
         this.$message(res.data.message)
@@ -190,7 +189,6 @@ export default {
   },
   mounted() {
     this.canvasDom = document.getElementById('canvas_sakura')
-    console.log(this.canvasDom)
     if (this.canvasDom) {
       this.canvasDom.style.display = 'none'
     }
