@@ -112,7 +112,7 @@ export default {
         const res = await getViewImages(this.page, 30, this.imgType)
         if (res.data.status === 1) {
           res.data.queryData.results.forEach((item) => {
-            item.url = `${this.$baseUrl}${item.url}`
+            item.url = `${item.url}`
           })
           this.total = res.data.queryData.total
           this.imgList = [...this.imgList, ...res.data.queryData.results]
