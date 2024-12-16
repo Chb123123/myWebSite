@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/main',
-    component: () => import('@/views/main/index.vue')
+    redirect: '/test',
+    component: () => import('@/views/test/test.vue')
   },
   {
     path: '/main',
@@ -56,6 +56,12 @@ const routes = [
     name: 'homeCharts',
     meta: { title: '首页图表' },
     component: () => import('@/views/home/charts/homeView.vue')
+  },
+  {
+    path: '/test',
+    name: 'test',
+    meta: { title: '新增测试' },
+    component: () => import('@/views/test/test.vue')
   }
 ]
 

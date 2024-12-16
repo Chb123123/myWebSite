@@ -17,7 +17,7 @@ export default {}
   margin: 0;
   padding: 0;
   // 设置字体为自定义字体
-  font-family: 'AliMaMa';
+  // font-family: 'AliMaMa';
   // 站酷仓耳渔阳体
   // font-family: 'Version';
   // ZCOOL XiaoWei

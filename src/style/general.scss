@@ -1,0 +1,18 @@
+.mainBox {
+  width: 100vw;
+  height: 100vh;
+  padding: 1.04vw;
+}
+.card {
+  border-radius: 0.31vw;
+  background-color: #00000040;
+  backdrop-filter: blur(0.52vw);
+  transform: scale(1);
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.01);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
